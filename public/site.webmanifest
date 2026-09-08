@@ -1,0 +1,11 @@
+{
+  "name": "Monumento al Divino Salvador del Mundo",
+  "short_name": "Salvador del Mundo",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f5ef",
+  "theme_color": "#0b4da2",
+  "icons": [
+    { "src": "/icons/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

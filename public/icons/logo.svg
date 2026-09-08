@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 88" role="img" aria-labelledby="title desc">
+  <title id="title">Salvador del Mundo</title>
+  <desc id="desc">Símbolo inspirado en la esfera y el pedestal del monumento</desc>
+  <g fill="none" stroke="#0B4DA2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="38" cy="27" r="16" fill="#4B9FA5" stroke="#0B4DA2"/>
+    <path d="M38 8v-6M32 7h12M38 43v8M27 51h22M31 51 22 80h32L45 51"/>
+    <path d="M16 80h44"/>
+  </g>
+  <text x="78" y="36" font-family="Georgia, serif" font-size="25" font-weight="700" fill="#072B5F">Salvador del Mundo</text>
+  <text x="79" y="60" font-family="Arial, sans-serif" font-size="12" letter-spacing="2.2" fill="#4B6383">SAN SALVADOR · EL SALVADOR</text>
+</svg>

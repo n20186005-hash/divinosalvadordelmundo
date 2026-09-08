@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Monumento al Divino Salvador del Mundo</title>
+  <desc id="desc">Guía independiente de visita en San Salvador</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#061e41"/><stop offset="1" stop-color="#0b4da2"/></linearGradient>
+    <radialGradient id="globe" cx="34%" cy="26%"><stop stop-color="#8ed3d3"/><stop offset=".62" stop-color="#4b9fa5"/><stop offset="1" stop-color="#245d67"/></radialGradient>
+    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0H0V50" fill="none" stroke="#fff" stroke-opacity=".07"/></pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/><rect width="1200" height="630" fill="url(#grid)"/>
+  <g transform="translate(110 70)">
+    <circle cx="170" cy="175" r="105" fill="url(#globe)" stroke="#d9f2f2" stroke-width="4"/>
+    <ellipse cx="170" cy="175" rx="105" ry="42" fill="none" stroke="#fff" stroke-opacity=".42" stroke-width="2"/>
+    <ellipse cx="170" cy="175" rx="38" ry="105" fill="none" stroke="#fff" stroke-opacity=".42" stroke-width="2"/>
+    <path d="M170 70V20M145 45h50" stroke="#e8c06b" stroke-width="9" stroke-linecap="round"/>
+    <path d="M145 280h50l38 210H107z" fill="#f4f0e7"/><rect x="70" y="487" width="200" height="26" rx="3" fill="#fff"/>
+  </g>
+  <text x="500" y="215" fill="#91c4ff" font-family="Arial, sans-serif" font-size="23" font-weight="700" letter-spacing="5">SAN SALVADOR · EL SALVADOR</text>
+  <text x="500" y="290" fill="#fff" font-family="Georgia, serif" font-size="72">Salvador</text>
+  <text x="500" y="370" fill="#fff" font-family="Georgia, serif" font-size="72">del Mundo</text>
+  <text x="503" y="430" fill="#c9d7e7" font-family="Arial, sans-serif" font-size="28">Historia, arquitectura y guía de visita</text>
+</svg>
