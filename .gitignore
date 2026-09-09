@@ -1,0 +1,18 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+.astro/
+
+# logs
+npm-debug.log*
+pnpm-debug.log*
+
+# Cloudflare local artifacts
+.wrangler/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.local

@@ -4,20 +4,37 @@ import '../styles/global.css';
 const attraction = {
   name: 'Monumento al Divino Salvador del Mundo',
   englishName: 'Monument to the Divine Savior of the World',
+  commonName: 'Plaza Salvador del Mundo',
   city: 'San Salvador',
+  region: 'Departamento de San Salvador',
   country: 'El Salvador',
+  countryCode: 'SV',
   address: 'Paseo General Escalón & Alameda Franklin Delano Roosevelt, San Salvador, El Salvador',
+  street: 'Paseo General Escalón & Alameda Franklin Delano Roosevelt',
   phone: '+503 2511 6000',
-  plusCode: 'PQ2G+G6 San Salvador, El Salvador',
+  phoneE164: '+50325116000',
+  plusCode: 'PQ2G+G6',
+  plusCodeLabel: 'PQ2G+G6 · San Salvador, El Salvador',
   latitude: 13.701326586685262,
   longitude: -89.22700882308682,
   rating: 4.6,
   reviewCount: 21008,
+  mapsUrl: 'https://maps.app.goo.gl/dJbRbbEYndvHH2kDA',
+  mapsEmbedSrc:
+    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6632.077258421091!2d-89.22700882308682!3d13.701326586685262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f6330410eacae2d%3A0xf3bd10411c7f3afb!2sMonument%20to%20the%20Divine%20Savior%20of%20the%20World!5e1!3m2!1sen!2s!4v1788749288171!5m2!1sen!2s',
+  tourismUrl: 'https://elsalvador.travel/',
+  culturaUrl: 'https://www.cultura.gob.sv/',
+  alcaldiaUrl: 'https://www.sansalvador.gob.sv/',
 };
+
+const ratingDisplay = attraction.rating.toLocaleString('es-SV');
+const reviewDisplay = attraction.reviewCount.toLocaleString('es-SV');
 
 const siteRoot = Astro.site ?? undefined;
 const canonical = siteRoot ? new URL('/', siteRoot).toString() : undefined;
-const ogImage = siteRoot ? new URL('/icons/og-card.svg', siteRoot).toString() : undefined;
+const ogImage = siteRoot ? new URL('/images/monumento-frontal.jpg', siteRoot).toString() : undefined;
+const attractionId = canonical ? `${canonical}#attraction` : undefined;
+const breadcrumbStart = canonical ?? undefined;
 
 const photos = [
   {
@@ -71,28 +88,56 @@ const faqs = [
     q: '¿Por qué es un símbolo nacional?',
     a: 'La figura de Cristo sobre el globo se ha convertido en una de las imágenes urbanas más reconocibles de El Salvador y funciona como punto cívico, religioso y de encuentro en la capital.',
   },
+  {
+    q: '¿Dónde está ubicado el Monumento al Divino Salvador del Mundo?',
+    a: 'Se encuentra en el cruce del Paseo General Escalón con la Alameda Franklin Delano Roosevelt, en San Salvador, El Salvador (Plus Code PQ2G+G6). Es una de las intersecciones más conocidas de la capital, sobre la Plaza Salvador del Mundo.',
+  },
+  {
+    q: '¿Se puede visitar de noche o está abierto las 24 horas?',
+    a: 'La plaza es un espacio público abierto las 24 horas y su acceso exterior es gratuito. Durante actos cívicos, religiosos o montajes pueden existir cierres temporales. De noche la iluminación urbana cambia la lectura del monumento; evita detenerte en calzadas o isletas de tráfico.',
+  },
+  {
+    q: '¿Qué lugares interesantes hay cerca del monumento?',
+    a: 'Por su posición central conviene combinarlo con el Parque Cuscatlán, el Museo de Arte de El Salvador (MARTE) y, en un traslado corto, el Centro Histórico de San Salvador.',
+  },
 ];
 
 const attractionJsonLd = {
   '@context': 'https://schema.org',
   '@type': ['TouristAttraction', 'LandmarksOrHistoricalBuildings'],
+  ...(attractionId ? { '@id': attractionId } : {}),
   name: attraction.name,
-  alternateName: attraction.englishName,
+  alternateName: [
+    attraction.englishName,
+    attraction.commonName,
+    `${attraction.name} (${attraction.city})`,
+  ],
   ...(canonical ? { url: canonical } : {}),
-  description: 'Monumento emblemático de San Salvador con la figura de Cristo sobre un globo terráqueo, inaugurado en 1942 y situado en la Plaza Salvador del Mundo.',
-  telephone: attraction.phone,
+  description:
+    'Guía de visita del Monumento al Divino Salvador del Mundo en San Salvador, El Salvador: historia, arquitectura, ubicación en la Plaza Salvador del Mundo, horarios de acceso gratuito y lugares cercanos.',
+  telephone: attraction.phoneE164,
+  ...(ogImage ? { image: [ogImage] } : {}),
   isAccessibleForFree: true,
+  touristType: 'Monumento histórico, hito cívico-religioso y atracción turística',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Paseo General Escalón & Alameda Franklin Delano Roosevelt',
+    streetAddress: attraction.street,
     addressLocality: attraction.city,
-    addressCountry: 'SV',
+    addressRegion: 'San Salvador',
+    addressCountry: attraction.countryCode,
   },
   geo: {
     '@type': 'GeoCoordinates',
     latitude: attraction.latitude,
     longitude: attraction.longitude,
   },
+  hasMap: attraction.mapsUrl,
+  sameAs: [
+    attraction.mapsUrl,
+    attraction.tourismUrl,
+    attraction.culturaUrl,
+    attraction.alcaldiaUrl,
+  ],
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
@@ -121,6 +166,22 @@ const faqJsonLd = {
     },
   })),
 };
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: attraction.name,
+      ...(breadcrumbStart ? { item: breadcrumbStart } : {}),
+    },
+    { '@type': 'ListItem', position: 2, name: attraction.city },
+    { '@type': 'ListItem', position: 3, name: attraction.region },
+    { '@type': 'ListItem', position: 4, name: attraction.country },
+  ],
+};
 ---
 
 <!doctype html>
@@ -128,9 +189,9 @@ const faqJsonLd = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Guía independiente para visitar el Monumento al Divino Salvador del Mundo: historia, arquitectura, horarios, costos, transporte, estacionamiento, fotos y lugares cercanos." />
-    <meta name="theme-color" content="#0b4592" />
-    <title>Monumento al Divino Salvador del Mundo | Guía de visita en San Salvador</title>
+    <meta name="description" content="Guía de visita del Monumento al Divino Salvador del Mundo en San Salvador, El Salvador: historia, arquitectura de 1942, ubicación en la Plaza Salvador del Mundo con mapa, acceso gratuito, transporte y lugares cercanos." />
+    <meta name="theme-color" content="#0b4da2" />
+    <title>Monumento al Divino Salvador del Mundo (San Salvador) – Guía de visita y ubicación</title>
     {canonical && <link rel="canonical" href={canonical} />}
     <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/icons/favicon-32.png" sizes="32x32" type="image/png" />
@@ -139,13 +200,20 @@ const faqJsonLd = {
     <link rel="manifest" href="/site.webmanifest" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_SV" />
-    <meta property="og:title" content="Monumento al Divino Salvador del Mundo | Guía de visita" />
-    <meta property="og:description" content="Historia, arquitectura y guía práctica del gran símbolo urbano de San Salvador." />
+    <meta property="og:site_name" content={attraction.name} />
+    <meta property="og:title" content={`${attraction.name} – Guía de visita en ${attraction.city}`} />
+    <meta property="og:description" content={`Guía oficial de visita al ${attraction.name} en ${attraction.city}, ${attraction.country}: historia, arquitectura, mapa, horarios y lugares cercanos como el Parque Cuscatlán y MARTE.`} />
     {canonical && <meta property="og:url" content={canonical} />}
     {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImage && <meta property="og:image:alt" content={`${attraction.name} en ${attraction.city}, ${attraction.country}`} />}
     <meta name="twitter:card" content="summary_large_image" />
-    <script type="application/ld+json" set:html={JSON.stringify(attractionJsonLd)}></script>
-    <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)}></script>
+    <meta name="twitter:title" content={`${attraction.name} (${attraction.city}) – Guía de visita y ubicación`} />
+    <meta name="twitter:description" content={`Ubicación, historia y guía práctica del ${attraction.name} en ${attraction.city}, ${attraction.country}.`} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+    {ogImage && <meta name="twitter:image:alt" content={`${attraction.name} en ${attraction.city}, ${attraction.country}`} />}
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(attractionJsonLd)}></script>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(faqJsonLd)}></script>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)}></script>
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -169,12 +237,12 @@ const faqJsonLd = {
 
     <main id="contenido">
       <section id="inicio" class="hero" aria-labelledby="hero-title">
-        <img class="hero-photo" src={photos[0].src} alt={photos[0].alt} fetchpriority="high" />
+        <img class="hero-photo" src={photos[0].src} alt={photos[0].alt} />
         <div class="hero-shade"></div>
         <div class="hero-grid" aria-hidden="true"></div>
         <div class="hero-content">
-          <p class="eyebrow">San Salvador · El Salvador</p>
-          <h1 id="hero-title">El Salvador del Mundo</h1>
+          <p class="eyebrow">Hito cívico-religioso · 1942 — hoy</p>
+          <h1 id="hero-title">Monumento al Divino Salvador del Mundo<span class="hero-loc">San Salvador · El Salvador</span></h1>
           <p class="hero-lead">Cristo sobre el mundo. Una imagen monumental que resume fe, memoria urbana e identidad salvadoreña en el corazón de la capital.</p>
           <div class="hero-actions">
             <a class="button button-primary" href="#visita">Planear la visita</a>
@@ -207,6 +275,35 @@ const faqJsonLd = {
         <div>
           <span>Mejor luz</span>
           <strong>Mañana y atardecer</strong>
+        </div>
+      </section>
+
+      <section id="acerca" class="section about-section" aria-labelledby="acerca-title">
+        <div class="about-grid">
+          <div class="prose">
+            <p class="section-kicker">Acerca del monumento</p>
+            <h2 id="acerca-title">Sobre el Monumento al Divino Salvador del Mundo en San Salvador</h2>
+            <p class="lede">El <strong>Monumento al Divino Salvador del Mundo</strong> —en inglés <em>Monument to the Divine Savior of the World</em>, nombre con el que figura en Google Maps— es el conjunto escultórico que preside la <strong>Plaza Salvador del Mundo</strong>, el hito central de <strong>San Salvador</strong>, capital de <strong>El Salvador</strong>. Su figura de Cristo sobre el globo resume, en una sola imagen, la relación entre la capital, la tradición religiosa y la identidad salvadoreña.</p>
+            <p>La escultura de 1942 se eleva en una de las intersecciones más visibles de la ciudad: el cruce del <strong>Paseo General Escalón</strong> con la <strong>Alameda Franklin Delano Roosevelt</strong>, en plena Plaza Salvador del Mundo.</p>
+            <ul class="geo-chain" aria-label="Jerarquía geográfica del monumento">
+              <li>{attraction.name}</li>
+              <li>{attraction.city}</li>
+              <li>{attraction.region}</li>
+              <li>{attraction.country}</li>
+            </ul>
+            <p>Por su posición central, la visita puede combinarse fácilmente con otros puntos de interés cercanos, como el <strong>Parque Cuscatlán</strong> y el <strong>Museo de Arte de El Salvador (MARTE)</strong>, o continuar en un traslado corto hacia el <strong>Centro Histórico de San Salvador</strong>.</p>
+          </div>
+          <aside class="nap-card" aria-label="Datos del monumento">
+            <dl>
+              <div><dt>Nombre</dt><dd>{attraction.name}</dd></div>
+              <div><dt>Dirección</dt><dd>{attraction.address}</dd></div>
+              <div><dt>Teléfono</dt><dd><a href={`tel:${attraction.phoneE164}`}>{attraction.phone}</a></dd></div>
+              <div><dt>Plus Code</dt><dd>{attraction.plusCode}</dd></div>
+              <div><dt>Horario</dt><dd>Plaza abierta 24 h · acceso gratuito</dd></div>
+              <div><dt>Valoración Google</dt><dd>{ratingDisplay}/5 · {reviewDisplay} reseñas</dd></div>
+            </dl>
+            <a class="button button-primary" href={attraction.mapsUrl} target="_blank" rel="noopener">Ver ubicación en Google Maps</a>
+          </aside>
         </div>
       </section>
 
@@ -317,17 +414,22 @@ const faqJsonLd = {
           </article>
         </div>
         <div class="address-panel">
-          <div>
-            <span>Dirección</span>
-            <strong>{attraction.address}</strong>
+          <div class="address-main">
+            <span>Dirección oficial</span>
+            <strong>{attraction.name} — {attraction.street}</strong>
+            <small>{attraction.city}, {attraction.country} · Plus Code {attraction.plusCode}</small>
           </div>
-          <div><span>Plus Code</span><strong>{attraction.plusCode}</strong></div>
-          <a class="button button-dark" href="https://maps.app.goo.gl/dJbRbbEYndvHH2kDA" target="_blank" rel="noopener">Abrir en Google Maps</a>
+          <div class="address-meta">
+            <div><span>Teléfono</span><strong>{attraction.phone}</strong></div>
+            <div><span>Horario</span><strong>24 h · acceso gratuito</strong></div>
+            <div><span>Valoración Google</span><strong>{ratingDisplay}/5 · {reviewDisplay} reseñas</strong></div>
+          </div>
+          <a class="button button-dark" href={attraction.mapsUrl} target="_blank" rel="noopener">Abrir en Google Maps</a>
         </div>
         <div class="map-wrap">
           <iframe
-            title="Mapa de la Plaza Salvador del Mundo"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6632.077258421091!2d-89.22700882308682!3d13.701326586685262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f6330410eacae2d%3A0xf3bd10411c7f3afb!2sMonument%20to%20the%20Divine%20Savior%20of%20the%20World!5e1!3m2!1ses!2ssv!4v1788749288171!5m2!1ses!2ssv&hl=es&region=SV"
+            title="Mapa del Monumento al Divino Salvador del Mundo en San Salvador"
+            src={attraction.mapsEmbedSrc}
             width="600"
             height="450"
             style="border:0;"
@@ -335,6 +437,9 @@ const faqJsonLd = {
             referrerpolicy="strict-origin-when-cross-origin"
             allowfullscreen
           ></iframe>
+        </div>
+        <div class="map-note">
+          <p>Para información oficial y actualizaciones turísticas de la región, visita el <a href={attraction.tourismUrl} target="_blank" rel="noopener noreferrer">Portal Oficial de Turismo de El Salvador (El Salvador Travel)</a> y la página del <a href={attraction.culturaUrl} target="_blank" rel="noopener noreferrer">Ministerio de Cultura de El Salvador</a>.</p>
         </div>
       </section>
 
@@ -388,14 +493,35 @@ const faqJsonLd = {
         </div>
       </section>
 
-      <section class="section source-section" aria-labelledby="fuentes-title">
-        <div>
+      <section id="fuentes" class="section source-section" aria-labelledby="fuentes-title">
+        <div class="source-intro">
           <p class="section-kicker">Fuentes & créditos</p>
           <h2 id="fuentes-title">Información trazable, fotografías con licencia abierta</h2>
+          <p class="source-note">La reseña histórica se apoya en publicaciones del Ministerio de Cultura de El Salvador, material educativo institucional y fuentes universitarias. Los datos prácticos pueden cambiar por eventos, obras o regulación local; compruébalos antes de tu visita.</p>
         </div>
-        <div class="source-copy">
-          <p>La reseña histórica se apoya en publicaciones del Ministerio de Cultura de El Salvador, material educativo institucional y fuentes universitarias. Los datos prácticos pueden cambiar por eventos, obras o regulación local; compruébalos antes de tu visita.</p>
-          <p>Las fotografías mostradas proceden de Wikimedia Commons y conservan atribución y licencia CC BY-SA 3.0. Consulta <a href="/PHOTO-SOURCES.md">PHOTO-SOURCES.md</a> en el paquete del proyecto para los enlaces de origen.</p>
+        <div class="source-body">
+          <h3>Fuentes oficiales y de referencia</h3>
+          <ul class="source-links">
+            <li>
+              <a href={attraction.culturaUrl} target="_blank" rel="noopener noreferrer">Ministerio de Cultura de El Salvador</a>
+              <span>Historia del monumento, de la plaza y declaratoria como Bien Cultural.</span>
+            </li>
+            <li>
+              <a href={attraction.tourismUrl} target="_blank" rel="noopener noreferrer">El Salvador Travel — Portal oficial de turismo</a>
+              <span>Información turística nacional y regional de El Salvador.</span>
+            </li>
+            <li>
+              <a href={attraction.alcaldiaUrl} target="_blank" rel="noopener noreferrer">Alcaldía Municipal de San Salvador</a>
+              <span>Información municipal de la capital.</span>
+            </li>
+            <li>
+              <a href={attraction.mapsUrl} target="_blank" rel="noopener noreferrer">Google Maps — Monumento al Divino Salvador del Mundo</a>
+              <span>Ficha pública del lugar: dirección, teléfono y valoración {ratingDisplay}/5 con {reviewDisplay} reseñas.</span>
+            </li>
+          </ul>
+          <h3>Créditos y propiedad de las fotografías</h3>
+          <p>Todas las fotografías mostradas en este sitio web pertenecen a sus autores originales y su copyright se reserva a los fotógrafos; se publican con atribución y licencia CC BY-SA 3.0. Consulta <a href="/PHOTO-SOURCES.md">PHOTO-SOURCES.md</a> en el paquete del proyecto para los enlaces de origen de cada imagen.</p>
+          <p class="source-note">Este sitio es una guía de visita independiente y no está afiliado a la administración del monumento ni a las instituciones citadas.</p>
         </div>
       </section>
     </main>
@@ -403,14 +529,15 @@ const faqJsonLd = {
     <footer class="site-footer">
       <div class="footer-brand">
         <img src="/icons/favicon.svg" width="46" height="46" alt="" />
-        <div><strong>Salvador del Mundo</strong><span>Guía independiente de visita</span></div>
+        <div><strong>Monumento al Divino Salvador del Mundo</strong><span>{attraction.address} · {attraction.phone}</span></div>
       </div>
       <div class="footer-links">
         <button type="button" data-open-dialog="privacy">Privacidad</button>
         <button type="button" data-open-dialog="terms">Términos</button>
         <button type="button" data-open-dialog="cookies">Cookies</button>
       </div>
-      <p class="disclaimer">Sitio informativo independiente; no es el sitio oficial de la Alcaldía de San Salvador, del Ministerio de Cultura ni de la administración de la plaza.</p>
+      <p class="disclaimer">Guía de visita independiente; no es el sitio oficial de la Alcaldía de San Salvador, del Ministerio de Cultura ni de la administración de la plaza.</p>
+      <p class="photo-credit">Todas las fotografías mostradas en este sitio web pertenecen a sus autores originales; su copyright se reserva a los fotógrafos.</p>
     </footer>
 
     <div class="cookie-banner" data-cookie-banner hidden>
@@ -524,6 +651,12 @@ const faqJsonLd = {
           toggle?.setAttribute('aria-expanded', 'false');
           nav.classList.remove('is-open');
         }));
+
+        if ('serviceWorker' in navigator && location.protocol === 'https:') {
+          addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
+          });
+        }
       })();
     </script>
   </body>

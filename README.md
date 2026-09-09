@@ -14,27 +14,23 @@ Sitio editorial de una sola página en español salvadoreño para el Monumento a
 
 ## Dominio: una sola fuente de verdad
 
-Edita únicamente `const SITE = ''` en `astro.config.mjs`.
+Dominio definitivo configurado: `https://divinosalvadordelmundo.com` en `const SITE = 'https://divinosalvadordelmundo.com'` de `astro.config.mjs`.
 
-- Si queda vacío: el sitio construye sin canonical absoluto, sin `og:url` absoluto y sin sitemap.
-- Si se completa con un dominio real: Astro expone `Astro.site`; canonical, Open Graph y JSON-LD se derivan de ahí, y `@astrojs/sitemap` se activa automáticamente.
+Con `SITE` completo, Astro expone `Astro.site`; canonical, Open Graph, JSON-LD (`@id` de la atracción, og:image) se derivan de ahí y `@astrojs/sitemap` genera `dist/sitemap-index.xml` automáticamente.
 
 ## Comandos
 
-En un entorno con acceso a npm, genera y versiona primero el lockfile:
-
 ```bash
-corepack enable
 pnpm install
-rm -rf node_modules
-CI=1 corepack pnpm install --frozen-lockfile
 pnpm check
 pnpm build
 pnpm verify:dist
 pnpm deploy
 ```
 
-Consulta `SELF-CHECK.md`: el contenedor usado para preparar esta entrega no tiene acceso DNS a `registry.npmjs.org`, por lo que no se falsificó un lockfile ni un resultado de build.
+> Nota de entorno (solo Windows local): pnpm falla en este sandbox al crear los junctions de `node_modules` (`os error 448`, montaje no confiable). La validación local se hizo con layout npm: `npm install --no-package-lock` + `npx astro check` + `npx astro build` + `node scripts/verify-dist.mjs`. En CI Linux los comandos `pnpm` funcionan con normalidad y el `pnpm-lock.yaml` versionado es reproducible con `CI=1 corepack pnpm install --frozen-lockfile`.
+
+Consulta `SELF-CHECK.md` para el detalle de las comprobaciones ejecutadas.
 
 ## Cloudflare
 

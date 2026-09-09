@@ -1,11 +1,17 @@
 {
-  "name": "Monumento al Divino Salvador del Mundo",
+  "name": "Monumento al Divino Salvador del Mundo — Guía de visita",
   "short_name": "Salvador del Mundo",
+  "description": "Guía de visita del Monumento al Divino Salvador del Mundo en San Salvador, El Salvador: historia, arquitectura, ubicación y lugares cercanos.",
+  "lang": "es-SV",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#f7f5ef",
   "theme_color": "#0b4da2",
   "icons": [
-    { "src": "/icons/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+    { "src": "/icons/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icons/favicon-16.png", "sizes": "16x16", "type": "image/png" },
+    { "src": "/icons/favicon-32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/icons/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any maskable" }
   ]
 }
