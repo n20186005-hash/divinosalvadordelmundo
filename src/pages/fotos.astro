@@ -1,0 +1,175 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ATTRACTION, GUIDES, PHOTOS } from '../data/site';
+import { PHOTO_FAQS } from '../data/faqs';
+import { buildBreadcrumbSchema, buildFaqSchema, buildWebPageSchema } from '../lib/schema';
+
+const pageTitle = 'Fotos del Monumento al Divino Salvador del Mundo: miradores';
+const pageDescription =
+  'Fotos del Monumento al Divino Salvador del Mundo en San Salvador: los cuatro miradores recomendados, mejores horas de luz, encuadres frontales y laterales y consejos de seguridad.';
+
+const site = Astro.site;
+const path = '/fotos/';
+const schema = [
+  buildWebPageSchema(site, path, pageTitle, pageDescription),
+  buildBreadcrumbSchema(site, [
+    { name: 'Inicio', path: '/' },
+    { name: 'Fotos' },
+  ]),
+  buildFaqSchema(PHOTO_FAQS),
+];
+const related = GUIDES.filter((guide) => guide.href !== path);
+
+const spots = [
+  {
+    name: 'Explanada frontal',
+    best: 'Todo el día',
+    text: 'La composición simétrica clásica: el pedestal como eje vertical y la esfera centrada. Deja aire sobre la figura para que la escultura respire.',
+  },
+  {
+    name: 'Laterales bajos',
+    best: 'Mañana y atardecer',
+    text: 'Un punto bajo a un costado enfatiza la monumentalidad: el pedestal crece y la figura se recorta contra el cielo.',
+  },
+  {
+    name: 'Borde de la plaza',
+    best: 'Mediodía nublado',
+    text: 'Desde el perímetro puedes incluir la ciudad o el volcán como fondo y mostrar la escala urbana del conjunto.',
+  },
+  {
+    name: 'Toma nocturna',
+    best: 'Después del anochecer',
+    text: 'Con la iluminación encendida, el monumento cambia por completo. Usa una superficie firme o apoyo y evita bloquear pasos peatonales.',
+  },
+];
+
+const gallery = [PHOTOS.frontal, PHOTOS.plaza, PHOTOS.vertical, PHOTOS.noche];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} path={path} schema={schema}>
+  <header class="page-hero">
+    <nav class="crumbs" aria-label="Ruta de navegación">
+      <a href="/">Inicio</a><span aria-hidden="true">›</span><span>Fotos</span>
+    </nav>
+    <p class="section-kicker">Fotografía</p>
+    <h1>Fotos del Monumento al Divino Salvador del Mundo</h1>
+    <p class="page-lead">
+      Cuatro miradores y cuatro momentos de luz para fotografiar el monumento desde la
+      {ATTRACTION.commonName}, con recomendaciones de seguridad en una plaza rodeada de tráfico.
+    </p>
+  </header>
+
+  <section class="section photo-section" aria-labelledby="galeria-title">
+    <div class="section-heading">
+      <p class="section-kicker">Galería</p>
+      <h2 id="galeria-title">Cuatro lecturas del mismo monumento</h2>
+    </div>
+    <div class="photo-grid photo-grid-pair">
+      {
+        gallery.map((photo) => (
+          <figure class="photo-frame">
+            <img
+              src={photo.src}
+              alt={photo.alt}
+              loading="lazy"
+              decoding="async"
+              width="1280"
+              height="960"
+            />
+            <figcaption>
+              <span>{photo.alt}</span>
+              <a href={photo.href} target="_blank" rel="license noopener">
+                {photo.author} · {photo.license}
+              </a>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section paper-grid" aria-labelledby="miradores-title">
+    <div class="section-heading">
+      <p class="section-kicker">Miradores</p>
+      <h2 id="miradores-title">Dónde colocarse según la luz</h2>
+    </div>
+    <div class="around-list">
+      {
+        spots.map((spot, index) => (
+          <article>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <div>
+              <h4>{spot.name}</h4>
+              <p>{spot.text}</p>
+              <p class="spot-best">Mejor momento: {spot.best}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="consejos-title">
+    <div class="section-heading narrow">
+      <p class="section-kicker">Consejos</p>
+      <h2 id="consejos-title">Antes de disparar</h2>
+    </div>
+    <div class="visit-cards">
+      <article class="info-card">
+        <p class="card-label">Luz</p>
+        <h3>Mañana y tarde</h3>
+        <p>La luz de primera hora y del final de la tarde es más suave y favorece el contraste entre el pedestal blanco y la esfera azul.</p>
+      </article>
+      <article class="info-card">
+        <p class="card-label">Encuadre</p>
+        <h3>Eje y aire</h3>
+        <p>Usa el pedestal como eje vertical y deja aire sobre la figura; en tomas abiertas, incorpora el borde de la plaza para dar escala.</p>
+      </article>
+      <article class="info-card">
+        <p class="card-label">Seguridad</p>
+        <h3>Fuera de la calzada</h3>
+        <p>No fotografíes desde la calzada ni te detengas en isletas de tráfico. El tráfico alrededor de la plaza es intenso a casi cualquier hora.</p>
+      </article>
+      <article class="info-card">
+        <p class="card-label">Respeto</p>
+        <h3>Espacio compartido</h3>
+        <p>No bloquees pasos peatonales y respeta los cierres temporales por actos cívicos, religiosos o montajes.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section faq-section" aria-labelledby="faq-fotos-title">
+    <div class="section-heading narrow">
+      <p class="section-kicker">Preguntas frecuentes</p>
+      <h2 id="faq-fotos-title">Dudas sobre fotografía en la plaza</h2>
+    </div>
+    <div class="faq-list">
+      {
+        PHOTO_FAQS.map((item) => (
+          <details>
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section guides-section" aria-labelledby="seguir-title">
+    <div class="section-heading narrow">
+      <p class="section-kicker">Seguir leyendo</p>
+      <h2 id="seguir-title">Otras guías del monumento</h2>
+    </div>
+    <div class="related-grid">
+      {
+        related.map((guide) => (
+          <a class="related-card" href={guide.href}>
+            <h3>{guide.title}</h3>
+            <p>{guide.text}</p>
+            <span>Leer →</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

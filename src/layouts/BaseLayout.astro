@@ -1,0 +1,286 @@
+---
+import '../styles/global.css';
+import { ATTRACTION, NAV, SITE_NAME } from '../data/site';
+import { buildSiteSchema, absoluteUrl, type Schema } from '../lib/schema';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Ruta interna canónica, p. ej. '/' o '/historia/'. */
+  path?: string;
+  /** Imagen social, ruta interna. */
+  ogImage?: string;
+  /** Imagen que debe precargarse (LCP). */
+  preload?: string;
+  /** JSON-LD adicional de la página. */
+  schema?: Schema | Schema[];
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  path = '/',
+  ogImage = '/images/monumento-frontal.jpg',
+  preload,
+  schema = [],
+  noindex = false,
+} = Astro.props;
+
+const site = Astro.site;
+/** Las páginas sin indexar (404) no declaran canonical: no existe URL canónica propia. */
+const canonical = noindex ? undefined : absoluteUrl(site, path);
+const ogImageUrl = absoluteUrl(site, ogImage);
+const ogImageAlt = `${ATTRACTION.name} en ${ATTRACTION.city}, ${ATTRACTION.country}`;
+const extraSchema = Array.isArray(schema) ? schema : [schema];
+const jsonLd = [buildSiteSchema(site), ...extraSchema];
+
+const isCurrent = (href: string) =>
+  href === '/' ? path === '/' : href.startsWith('/') && !href.startsWith('/#') && path === href;
+---
+
+<!doctype html>
+<html lang="es-SV">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta name="theme-color" content="#0b4da2" />
+    <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icons/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/icons/favicon-16.png" sizes="16x16" type="image/png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" sizes="180x180" />
+    <link rel="manifest" href="/site.webmanifest" />
+    {preload && <link rel="preload" as="image" href={preload} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_SV" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+    {ogImageUrl && <meta property="og:image:alt" content={ogImageAlt} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
+    {ogImageUrl && <meta name="twitter:image:alt" content={ogImageAlt} />}
+
+    {jsonLd.map((item) => (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(item)}></script>
+    ))}
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <header class="site-header" data-header>
+      <a class="brand" href="/" aria-label="Ir al inicio">
+        <img src="/icons/logo.svg" alt={ATTRACTION.name} width="206" height="54" />
+      </a>
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="nav-principal"
+        data-nav-toggle
+      >
+        <span></span><span></span><span></span>
+        <span class="sr-only">Abrir navegación</span>
+      </button>
+      <nav id="nav-principal" class="main-nav" aria-label="Navegación principal" data-nav>
+        {
+          NAV.map((item) => (
+            <a
+              href={item.href}
+              aria-current={isCurrent(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+    </header>
+
+    <main id="contenido">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <img src="/icons/favicon.svg" width="46" height="46" alt="" />
+        <div>
+          <strong>{ATTRACTION.name}</strong>
+          <span>{ATTRACTION.address} · {ATTRACTION.phone}</span>
+        </div>
+      </div>
+      <nav class="footer-links" aria-label="Enlaces del sitio">
+        <a href="/historia/">Historia</a>
+        <a href="/como-llegar/">Cómo llegar</a>
+        <a href="/fotos/">Fotos</a>
+        <button type="button" data-open-dialog="privacy">Privacidad</button>
+        <button type="button" data-open-dialog="terms">Términos</button>
+        <button type="button" data-open-dialog="cookies">Cookies</button>
+      </nav>
+      <p class="disclaimer">
+        Guía de visita independiente; no es el sitio oficial de la Alcaldía de San Salvador, del
+        Ministerio de Cultura ni de la administración de la plaza.
+      </p>
+      <p class="photo-credit">
+        Todas las fotografías mostradas en este sitio web pertenecen a sus autores originales; su
+        copyright se reserva a los fotógrafos.
+      </p>
+    </footer>
+
+    <div class="cookie-banner" data-cookie-banner hidden>
+      <div>
+        <strong>Preferencias de medición</strong>
+        <p>
+          Usamos Google Analytics solo si aceptas cookies de analítica. Las necesarias para recordar
+          tu elección no requieren consentimiento.
+        </p>
+      </div>
+      <div class="cookie-actions">
+        <button class="button button-primary" type="button" data-cookie-accept>Aceptar analítica</button>
+        <button class="button button-ghost-dark" type="button" data-cookie-reject>Solo necesarias</button>
+        <button class="text-button" type="button" data-open-dialog="cookies">Configurar</button>
+      </div>
+    </div>
+
+    <dialog id="privacy" class="legal-dialog">
+      <div class="dialog-inner">
+        <button class="dialog-close" type="button" data-close-dialog aria-label="Cerrar">×</button>
+        <p class="section-kicker">Privacidad</p>
+        <h2>Política de privacidad</h2>
+        <p>
+          Este sitio es informativo y no solicita cuentas, formularios de registro ni datos de pago.
+          Si autorizas analítica, Google Analytics 4 puede recibir datos técnicos y de uso de acuerdo
+          con su propia política.
+        </p>
+        <p>
+          La preferencia de cookies se guarda localmente en tu navegador. Puedes cambiarla desde
+          “Cookies” en el pie de página.
+        </p>
+      </div>
+    </dialog>
+
+    <dialog id="terms" class="legal-dialog">
+      <div class="dialog-inner">
+        <button class="dialog-close" type="button" data-close-dialog aria-label="Cerrar">×</button>
+        <p class="section-kicker">Términos</p>
+        <h2>Términos de uso</h2>
+        <p>
+          La información se ofrece como orientación general para visitantes. Horarios, accesos,
+          transporte, estacionamiento, eventos y condiciones del espacio público pueden cambiar sin
+          aviso.
+        </p>
+        <p>
+          Verifica la información crítica con fuentes oficiales o servicios locales antes de
+          desplazarte. Las marcas y nombres de terceros pertenecen a sus respectivos titulares.
+        </p>
+      </div>
+    </dialog>
+
+    <dialog id="cookies" class="legal-dialog">
+      <div class="dialog-inner">
+        <button class="dialog-close" type="button" data-close-dialog aria-label="Cerrar">×</button>
+        <p class="section-kicker">Cookies</p>
+        <h2>Configuración de cookies</h2>
+        <div class="preference-row">
+          <div><strong>Necesarias</strong><p>Guardan tu preferencia de privacidad.</p></div>
+          <span>Siempre activas</span>
+        </div>
+        <div class="preference-row">
+          <div><strong>Analítica</strong><p>Google Analytics 4 (G-HXM22WWPKP), solo con consentimiento.</p></div>
+          <label class="switch"><input type="checkbox" data-analytics-toggle /><span></span></label>
+        </div>
+        <button class="button button-primary" type="button" data-save-preferences>Guardar preferencias</button>
+      </div>
+    </dialog>
+
+    <script is:inline>
+      (() => {
+        const GA_ID = 'G-HXM22WWPKP';
+        const COOKIE_KEY = 'salvador-mundo-analytics-consent';
+        let analyticsLoaded = false;
+
+        const loadAnalytics = () => {
+          if (analyticsLoaded || document.querySelector('script[data-ga4]')) return;
+          analyticsLoaded = true;
+          const script = document.createElement('script');
+          script.async = true;
+          script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+          script.dataset.ga4 = 'true';
+          document.head.appendChild(script);
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function () { window.dataLayer.push(arguments); };
+          window.gtag('js', new Date());
+          window.gtag('config', GA_ID, { anonymize_ip: true });
+        };
+
+        const setConsent = (allowed) => {
+          localStorage.setItem(COOKIE_KEY, allowed ? 'granted' : 'denied');
+          const toggle = document.querySelector('[data-analytics-toggle]');
+          if (toggle) toggle.checked = allowed;
+          const banner = document.querySelector('[data-cookie-banner]');
+          if (banner) banner.hidden = true;
+          if (allowed) loadAnalytics();
+        };
+
+        const stored = localStorage.getItem(COOKIE_KEY);
+        const banner = document.querySelector('[data-cookie-banner]');
+        if (!stored && banner) banner.hidden = false;
+        if (stored === 'granted') loadAnalytics();
+
+        document.querySelector('[data-cookie-accept]')?.addEventListener('click', () => setConsent(true));
+        document.querySelector('[data-cookie-reject]')?.addEventListener('click', () => setConsent(false));
+
+        const analyticsToggle = document.querySelector('[data-analytics-toggle]');
+        if (analyticsToggle) analyticsToggle.checked = stored === 'granted';
+        document.querySelector('[data-save-preferences]')?.addEventListener('click', () => {
+          setConsent(Boolean(analyticsToggle?.checked));
+          document.querySelector('#cookies')?.close();
+        });
+
+        document.querySelectorAll('[data-open-dialog]').forEach((button) => {
+          button.addEventListener('click', () => {
+            const id = button.getAttribute('data-open-dialog');
+            const dialog = id ? document.getElementById(id) : null;
+            if (dialog?.showModal) dialog.showModal();
+          });
+        });
+        document.querySelectorAll('[data-close-dialog]').forEach((button) => {
+          button.addEventListener('click', () => button.closest('dialog')?.close());
+        });
+        document.querySelectorAll('dialog').forEach((dialog) => {
+          dialog.addEventListener('click', (event) => {
+            if (event.target === dialog) dialog.close();
+          });
+        });
+
+        const toggle = document.querySelector('[data-nav-toggle]');
+        const nav = document.querySelector('[data-nav]');
+        toggle?.addEventListener('click', () => {
+          const open = toggle.getAttribute('aria-expanded') === 'true';
+          toggle.setAttribute('aria-expanded', String(!open));
+          nav?.classList.toggle('is-open', !open);
+        });
+        nav?.querySelectorAll('a').forEach((link) =>
+          link.addEventListener('click', () => {
+            toggle?.setAttribute('aria-expanded', 'false');
+            nav.classList.remove('is-open');
+          })
+        );
+
+        if ('serviceWorker' in navigator && location.protocol === 'https:') {
+          addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

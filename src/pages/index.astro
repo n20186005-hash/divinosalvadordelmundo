@@ -1,663 +1,435 @@
 ---
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+  ATTRACTION,
+  GUIDES,
+  PHOTOS,
+  RATING_DISPLAY,
+  REVIEW_DISPLAY,
+} from '../data/site';
+import { HOME_FAQS } from '../data/faqs';
+import {
+  buildAttractionSchema,
+  buildBreadcrumbSchema,
+  buildFaqSchema,
+  buildWebPageSchema,
+} from '../lib/schema';
 
-const attraction = {
-  name: 'Monumento al Divino Salvador del Mundo',
-  englishName: 'Monument to the Divine Savior of the World',
-  commonName: 'Plaza Salvador del Mundo',
-  city: 'San Salvador',
-  region: 'Departamento de San Salvador',
-  country: 'El Salvador',
-  countryCode: 'SV',
-  address: 'Paseo General Escalón & Alameda Franklin Delano Roosevelt, San Salvador, El Salvador',
-  street: 'Paseo General Escalón & Alameda Franklin Delano Roosevelt',
-  phone: '+503 2511 6000',
-  phoneE164: '+50325116000',
-  plusCode: 'PQ2G+G6',
-  plusCodeLabel: 'PQ2G+G6 · San Salvador, El Salvador',
-  latitude: 13.701326586685262,
-  longitude: -89.22700882308682,
-  rating: 4.6,
-  reviewCount: 21008,
-  mapsUrl: 'https://maps.app.goo.gl/dJbRbbEYndvHH2kDA',
-  mapsEmbedSrc:
-    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6632.077258421091!2d-89.22700882308682!3d13.701326586685262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f6330410eacae2d%3A0xf3bd10411c7f3afb!2sMonument%20to%20the%20Divine%20Savior%20of%20the%20World!5e1!3m2!1sen!2s!4v1788749288171!5m2!1sen!2s',
-  tourismUrl: 'https://elsalvador.travel/',
-  culturaUrl: 'https://www.cultura.gob.sv/',
-  alcaldiaUrl: 'https://www.sansalvador.gob.sv/',
-};
+const pageTitle = 'Monumento al Divino Salvador del Mundo: historia, cómo llegar y fotos';
+const pageDescription =
+  'El Monumento al Divino Salvador del Mundo en San Salvador: historia, cómo llegar en bus o taxi, horario 24 h, acceso gratuito, fotos, mapa y lugares cercanos.';
 
-const ratingDisplay = attraction.rating.toLocaleString('es-SV');
-const reviewDisplay = attraction.reviewCount.toLocaleString('es-SV');
-
-const siteRoot = Astro.site ?? undefined;
-const canonical = siteRoot ? new URL('/', siteRoot).toString() : undefined;
-const ogImage = siteRoot ? new URL('/images/monumento-frontal.jpg', siteRoot).toString() : undefined;
-const attractionId = canonical ? `${canonical}#attraction` : undefined;
-const breadcrumbStart = canonical ?? undefined;
-
-const photos = [
-  {
-    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Monumento_al_Salvador_del_Mundo_1.jpg/1280px-Monumento_al_Salvador_del_Mundo_1.jpg',
-    alt: 'Vista amplia del Monumento al Divino Salvador del Mundo en San Salvador',
-    author: 'Frankjh',
-    license: 'CC BY-SA 3.0',
-    href: 'https://commons.wikimedia.org/wiki/File:Monumento_al_Salvador_del_Mundo_1.jpg',
-  },
-  {
-    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Monumento_al_Divino_Salvador_del_Mundo.JPG/1280px-Monumento_al_Divino_Salvador_del_Mundo.JPG',
-    alt: 'Monumento al Divino Salvador del Mundo bajo el cielo de San Salvador',
-    author: 'Erickssonr',
-    license: 'CC BY-SA 3.0',
-    href: 'https://commons.wikimedia.org/wiki/File:Monumento_al_Divino_Salvador_del_Mundo.JPG',
-  },
-  {
-    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Monumento_al_Divino_Salvador_del_Mundo_-_Plaza_Salvador_del_Mundo.JPG/960px-Monumento_al_Divino_Salvador_del_Mundo_-_Plaza_Salvador_del_Mundo.JPG',
-    alt: 'Perspectiva vertical del pedestal y la escultura del Divino Salvador del Mundo',
-    author: 'Oskpal777',
-    license: 'CC BY-SA 3.0',
-    href: 'https://commons.wikimedia.org/wiki/File:Monumento_al_Divino_Salvador_del_Mundo_-_Plaza_Salvador_del_Mundo.JPG',
-  },
-  {
-    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Monumento_al_Divino_Salvador_del_Mundo_en_El_Salvador.jpg/1280px-Monumento_al_Divino_Salvador_del_Mundo_en_El_Salvador.jpg',
-    alt: 'Monumento iluminado durante las fiestas de agosto de San Salvador',
-    author: 'Alex Bonilla',
-    license: 'CC BY-SA 3.0',
-    href: 'https://commons.wikimedia.org/wiki/File:Monumento_al_Divino_Salvador_del_Mundo_en_El_Salvador.jpg',
-  },
+const site = Astro.site;
+const schema = [
+  buildAttractionSchema(site),
+  buildFaqSchema(HOME_FAQS),
+  buildBreadcrumbSchema(site, [{ name: 'Inicio', path: '/' }]),
+  buildWebPageSchema(site, '/', pageTitle, pageDescription),
 ];
 
-const faqs = [
-  {
-    q: '¿Se paga entrada para visitar el Monumento al Divino Salvador del Mundo?',
-    a: 'No hay una entrada turística fija para acceder a la plaza. Es un espacio urbano abierto; actividades o eventos especiales pueden tener su propia organización.',
-  },
-  {
-    q: '¿Cuál es el mejor momento para visitarlo?',
-    a: 'La luz de primera hora y la tarde suele favorecer las fotografías y evita el sol más fuerte. Al anochecer, la iluminación urbana ofrece otra lectura del monumento.',
-  },
-  {
-    q: '¿Cuánto tiempo conviene reservar?',
-    a: 'Entre 30 y 60 minutos suele ser suficiente para recorrer la plaza, observar el conjunto y tomar fotografías. Puede integrarse fácilmente con otros puntos de San Salvador.',
-  },
-  {
-    q: '¿Hay estacionamiento dentro de la plaza?',
-    a: 'No conviene asumir que existe estacionamiento turístico dedicado dentro del monumento. La opción práctica es utilizar estacionamientos privados cercanos o llegar en transporte por aplicación y verificar siempre la señalización vigente.',
-  },
-  {
-    q: '¿Por qué es un símbolo nacional?',
-    a: 'La figura de Cristo sobre el globo se ha convertido en una de las imágenes urbanas más reconocibles de El Salvador y funciona como punto cívico, religioso y de encuentro en la capital.',
-  },
-  {
-    q: '¿Dónde está ubicado el Monumento al Divino Salvador del Mundo?',
-    a: 'Se encuentra en el cruce del Paseo General Escalón con la Alameda Franklin Delano Roosevelt, en San Salvador, El Salvador (Plus Code PQ2G+G6). Es una de las intersecciones más conocidas de la capital, sobre la Plaza Salvador del Mundo.',
-  },
-  {
-    q: '¿Se puede visitar de noche o está abierto las 24 horas?',
-    a: 'La plaza es un espacio público abierto las 24 horas y su acceso exterior es gratuito. Durante actos cívicos, religiosos o montajes pueden existir cierres temporales. De noche la iluminación urbana cambia la lectura del monumento; evita detenerte en calzadas o isletas de tráfico.',
-  },
-  {
-    q: '¿Qué lugares interesantes hay cerca del monumento?',
-    a: 'Por su posición central conviene combinarlo con el Parque Cuscatlán, el Museo de Arte de El Salvador (MARTE) y, en un traslado corto, el Centro Histórico de San Salvador.',
-  },
-];
-
-const attractionJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': ['TouristAttraction', 'LandmarksOrHistoricalBuildings'],
-  ...(attractionId ? { '@id': attractionId } : {}),
-  name: attraction.name,
-  alternateName: [
-    attraction.englishName,
-    attraction.commonName,
-    `${attraction.name} (${attraction.city})`,
-  ],
-  ...(canonical ? { url: canonical } : {}),
-  description:
-    'Guía de visita del Monumento al Divino Salvador del Mundo en San Salvador, El Salvador: historia, arquitectura, ubicación en la Plaza Salvador del Mundo, horarios de acceso gratuito y lugares cercanos.',
-  telephone: attraction.phoneE164,
-  ...(ogImage ? { image: [ogImage] } : {}),
-  isAccessibleForFree: true,
-  touristType: 'Monumento histórico, hito cívico-religioso y atracción turística',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: attraction.street,
-    addressLocality: attraction.city,
-    addressRegion: 'San Salvador',
-    addressCountry: attraction.countryCode,
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: attraction.latitude,
-    longitude: attraction.longitude,
-  },
-  hasMap: attraction.mapsUrl,
-  sameAs: [
-    attraction.mapsUrl,
-    attraction.tourismUrl,
-    attraction.culturaUrl,
-    attraction.alcaldiaUrl,
-  ],
-  openingHoursSpecification: [
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-      opens: '00:00',
-      closes: '23:59',
-    },
-  ],
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: attraction.rating,
-    reviewCount: attraction.reviewCount,
-    bestRating: 5,
-  },
-};
-
-const faqJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((item) => ({
-    '@type': 'Question',
-    name: item.q,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: item.a,
-    },
-  })),
-};
-
-const breadcrumbJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: attraction.name,
-      ...(breadcrumbStart ? { item: breadcrumbStart } : {}),
-    },
-    { '@type': 'ListItem', position: 2, name: attraction.city },
-    { '@type': 'ListItem', position: 3, name: attraction.region },
-    { '@type': 'ListItem', position: 4, name: attraction.country },
-  ],
-};
+const hero = PHOTOS.frontal;
+const highlights = [PHOTOS.plaza, PHOTOS.vertical];
 ---
 
-<!doctype html>
-<html lang="es-SV">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Guía de visita del Monumento al Divino Salvador del Mundo en San Salvador, El Salvador: historia, arquitectura de 1942, ubicación en la Plaza Salvador del Mundo con mapa, acceso gratuito, transporte y lugares cercanos." />
-    <meta name="theme-color" content="#0b4da2" />
-    <title>Monumento al Divino Salvador del Mundo (San Salvador) – Guía de visita y ubicación</title>
-    {canonical && <link rel="canonical" href={canonical} />}
-    <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="/icons/favicon-32.png" sizes="32x32" type="image/png" />
-    <link rel="icon" href="/icons/favicon-16.png" sizes="16x16" type="image/png" />
-    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" sizes="180x180" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="es_SV" />
-    <meta property="og:site_name" content={attraction.name} />
-    <meta property="og:title" content={`${attraction.name} – Guía de visita en ${attraction.city}`} />
-    <meta property="og:description" content={`Guía oficial de visita al ${attraction.name} en ${attraction.city}, ${attraction.country}: historia, arquitectura, mapa, horarios y lugares cercanos como el Parque Cuscatlán y MARTE.`} />
-    {canonical && <meta property="og:url" content={canonical} />}
-    {ogImage && <meta property="og:image" content={ogImage} />}
-    {ogImage && <meta property="og:image:alt" content={`${attraction.name} en ${attraction.city}, ${attraction.country}`} />}
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={`${attraction.name} (${attraction.city}) – Guía de visita y ubicación`} />
-    <meta name="twitter:description" content={`Ubicación, historia y guía práctica del ${attraction.name} en ${attraction.city}, ${attraction.country}.`} />
-    {ogImage && <meta name="twitter:image" content={ogImage} />}
-    {ogImage && <meta name="twitter:image:alt" content={`${attraction.name} en ${attraction.city}, ${attraction.country}`} />}
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(attractionJsonLd)}></script>
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(faqJsonLd)}></script>
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)}></script>
-  </head>
-  <body>
-    <a class="skip-link" href="#contenido">Saltar al contenido</a>
-
-    <header class="site-header" data-header>
-      <a class="brand" href="#inicio" aria-label="Ir al inicio">
-        <img src="/icons/logo.svg" alt="" width="206" height="54" />
-      </a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-principal" data-nav-toggle>
-        <span></span><span></span><span></span>
-        <span class="sr-only">Abrir navegación</span>
-      </button>
-      <nav id="nav-principal" class="main-nav" aria-label="Navegación principal" data-nav>
-        <a href="#historia">Historia</a>
-        <a href="#visita">Visita</a>
-        <a href="#llegar">Cómo llegar</a>
-        <a href="#alrededores">Alrededores</a>
-        <a href="#faq">FAQ</a>
-      </nav>
-    </header>
-
-    <main id="contenido">
-      <section id="inicio" class="hero" aria-labelledby="hero-title">
-        <img class="hero-photo" src={photos[0].src} alt={photos[0].alt} />
-        <div class="hero-shade"></div>
-        <div class="hero-grid" aria-hidden="true"></div>
-        <div class="hero-content">
-          <p class="eyebrow">Hito cívico-religioso · 1942 — hoy</p>
-          <h1 id="hero-title">Monumento al Divino Salvador del Mundo<span class="hero-loc">San Salvador · El Salvador</span></h1>
-          <p class="hero-lead">Cristo sobre el mundo. Una imagen monumental que resume fe, memoria urbana e identidad salvadoreña en el corazón de la capital.</p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="#visita">Planear la visita</a>
-            <a class="button button-ghost" href="#historia">Conocer su historia</a>
-          </div>
-        </div>
-        <div class="hero-credit">
-          Foto: {photos[0].author} · {photos[0].license}
-        </div>
-        <div class="hero-seal" aria-hidden="true">
-          <span class="seal-globe"></span>
-          <span class="seal-axis"></span>
-          <span class="seal-base"></span>
-        </div>
-      </section>
-
-      <section class="fact-band" aria-label="Información esencial">
-        <div>
-          <span>Horario</span>
-          <strong>Abierto 24 horas</strong>
-        </div>
-        <div>
-          <span>Entrada</span>
-          <strong>Acceso gratuito</strong>
-        </div>
-        <div>
-          <span>Tiempo sugerido</span>
-          <strong>30–60 min</strong>
-        </div>
-        <div>
-          <span>Mejor luz</span>
-          <strong>Mañana y atardecer</strong>
-        </div>
-      </section>
-
-      <section id="acerca" class="section about-section" aria-labelledby="acerca-title">
-        <div class="about-grid">
-          <div class="prose">
-            <p class="section-kicker">Acerca del monumento</p>
-            <h2 id="acerca-title">Sobre el Monumento al Divino Salvador del Mundo en San Salvador</h2>
-            <p class="lede">El <strong>Monumento al Divino Salvador del Mundo</strong> —en inglés <em>Monument to the Divine Savior of the World</em>, nombre con el que figura en Google Maps— es el conjunto escultórico que preside la <strong>Plaza Salvador del Mundo</strong>, el hito central de <strong>San Salvador</strong>, capital de <strong>El Salvador</strong>. Su figura de Cristo sobre el globo resume, en una sola imagen, la relación entre la capital, la tradición religiosa y la identidad salvadoreña.</p>
-            <p>La escultura de 1942 se eleva en una de las intersecciones más visibles de la ciudad: el cruce del <strong>Paseo General Escalón</strong> con la <strong>Alameda Franklin Delano Roosevelt</strong>, en plena Plaza Salvador del Mundo.</p>
-            <ul class="geo-chain" aria-label="Jerarquía geográfica del monumento">
-              <li>{attraction.name}</li>
-              <li>{attraction.city}</li>
-              <li>{attraction.region}</li>
-              <li>{attraction.country}</li>
-            </ul>
-            <p>Por su posición central, la visita puede combinarse fácilmente con otros puntos de interés cercanos, como el <strong>Parque Cuscatlán</strong> y el <strong>Museo de Arte de El Salvador (MARTE)</strong>, o continuar en un traslado corto hacia el <strong>Centro Histórico de San Salvador</strong>.</p>
-          </div>
-          <aside class="nap-card" aria-label="Datos del monumento">
-            <dl>
-              <div><dt>Nombre</dt><dd>{attraction.name}</dd></div>
-              <div><dt>Dirección</dt><dd>{attraction.address}</dd></div>
-              <div><dt>Teléfono</dt><dd><a href={`tel:${attraction.phoneE164}`}>{attraction.phone}</a></dd></div>
-              <div><dt>Plus Code</dt><dd>{attraction.plusCode}</dd></div>
-              <div><dt>Horario</dt><dd>Plaza abierta 24 h · acceso gratuito</dd></div>
-              <div><dt>Valoración Google</dt><dd>{ratingDisplay}/5 · {reviewDisplay} reseñas</dd></div>
-            </dl>
-            <a class="button button-primary" href={attraction.mapsUrl} target="_blank" rel="noopener">Ver ubicación en Google Maps</a>
-          </aside>
-        </div>
-      </section>
-
-      <section id="historia" class="section section-story paper-grid">
-        <div class="section-heading">
-          <p class="section-kicker">1942 — hoy</p>
-          <h2>Un monumento que terminó representando a todo un país</h2>
-        </div>
-        <div class="story-layout">
-          <div class="story-copy prose">
-            <p class="lede">La Plaza Salvador del Mundo fue construida en 1942 para el Primer Congreso Eucarístico Nacional. En su centro se elevó el conjunto que hoy identifica a San Salvador: una figura de Cristo, de mármol de Carrara, sobre un globo terráqueo y un alto pedestal.</p>
-            <p>La escultura había sido encargada en memoria del expresidente Manuel Enrique Araujo y, antes de llegar a la plaza, estuvo vinculada a su monumento funerario y al Seminario San José de la Montaña. Con el tiempo, su ubicación en una de las principales intersecciones de la capital transformó la obra en referencia cívica y punto de encuentro.</p>
-            <p>El terremoto de 1986 derribó y dañó gravemente la estatua. Fue reconstruida y volvió a ocupar su posición elevada. En 2012, la plaza recibió reconocimiento formal como Bien Cultural de El Salvador.</p>
-          </div>
-          <aside class="timeline" aria-label="Hitos históricos">
-            <div class="timeline-item"><b>1942</b><span>Construcción de la plaza e instalación del monumento.</span></div>
-            <div class="timeline-item"><b>1986</b><span>El terremoto derriba la escultura; posteriormente es restaurada.</span></div>
-            <div class="timeline-item"><b>2012</b><span>La Plaza Salvador del Mundo es declarada Bien Cultural.</span></div>
-          </aside>
-        </div>
-      </section>
-
-      <section class="section monument-anatomy" aria-labelledby="arquitectura-title">
-        <div class="anatomy-visual" aria-hidden="true">
-          <div class="figure-mark">✦</div>
-          <div class="globe-orbit"><div class="globe-core"></div></div>
-          <div class="pedestal-mark"></div>
-          <div class="plinth-mark"></div>
-        </div>
-        <div class="anatomy-copy">
-          <p class="section-kicker">Arquitectura & símbolo</p>
-          <h2 id="arquitectura-title">Una composición vertical: tierra, pedestal y figura</h2>
-          <p>La lectura visual es inmediata. El globo azul y blanco concentra la mirada; encima se recorta la figura de Cristo, mientras el pedestal blanco la separa del tránsito y del horizonte urbano. Más que un edificio, es una pieza de monumentalidad cívico-religiosa diseñada para verse a distancia.</p>
-          <dl class="detail-list">
-            <div><dt>Material destacado</dt><dd>Escultura de mármol de Carrara</dd></div>
-            <div><dt>Lenguaje</dt><dd>Monumentalismo con simbolismo religioso</dd></div>
-            <div><dt>Composición</dt><dd>Eje vertical sobre plaza de traza romboidal</dd></div>
-            <div><dt>Valor cultural</dt><dd>Emblema visual de San Salvador y El Salvador</dd></div>
-          </dl>
-        </div>
-      </section>
-
-      <section id="visita" class="section visit-section">
-        <div class="section-heading narrow">
-          <p class="section-kicker">Visita práctica</p>
-          <h2>Cómo recorrer la plaza sin perder su mejor perspectiva</h2>
-          <p>El monumento se disfruta mejor como una secuencia de vistas: primero desde el borde urbano, después desde el eje del pedestal y finalmente desde los laterales de la plaza.</p>
-        </div>
-        <div class="route-grid">
-          <article><span>01</span><h3>Llegada y vista general</h3><p>Detente en un punto seguro del perímetro para leer el conjunto completo y su relación con las grandes avenidas.</p></article>
-          <article><span>02</span><h3>Eje frontal</h3><p>Acércate por los senderos de la plaza. El pedestal gana escala y la esfera se vuelve el centro de la composición.</p></article>
-          <article><span>03</span><h3>Giro lateral</h3><p>Rodea el monumento para buscar el perfil de Cristo y separar la silueta del fondo urbano.</p></article>
-          <article><span>04</span><h3>Luz de cierre</h3><p>Si visitas al final de la tarde, reserva unos minutos para el cambio de luz y la iluminación nocturna.</p></article>
-        </div>
-
-        <div class="visit-cards">
-          <article class="info-card"><p class="card-label">Horario</p><h3>24 horas</h3><p>La plaza se presenta como espacio público abierto. En eventos, pueden existir cierres parciales o controles temporales.</p></article>
-          <article class="info-card"><p class="card-label">Entrada / costos</p><h3>Sin boleto fijo</h3><p>La visita al monumento no requiere una tarifa turística regular. Presupuesta solamente transporte, estacionamiento o consumos cercanos.</p></article>
-          <article class="info-card"><p class="card-label">Mejor momento</p><h3>Mañana o atardecer</h3><p>Menos calor, luz más lateral y mejores contrastes en el pedestal blanco y la esfera azul.</p></article>
-          <article class="info-card"><p class="card-label">Estancia sugerida</p><h3>30–60 minutos</h3><p>Suficiente para caminar, fotografiar y entender el monumento; amplía el tiempo si combinas la visita con el entorno.</p></article>
-        </div>
-      </section>
-
-      <section class="section photo-section" aria-labelledby="fotos-title">
-        <div class="section-heading">
-          <p class="section-kicker">Fotografía</p>
-          <h2 id="fotos-title">Tres encuadres para entender su escala</h2>
-        </div>
-        <div class="photo-grid">
-          {photos.slice(1).map((photo, index) => (
-            <figure class:list={['photo-frame', index === 1 && 'photo-frame-tall']}>
-              <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
-              <figcaption>
-                <span>{index === 0 ? 'Frontal · esfera y pedestal' : index === 1 ? 'Vertical · monumentalidad' : 'Nocturna · fiestas de agosto'}</span>
-                <a href={photo.href} target="_blank" rel="license noopener">{photo.author} · {photo.license}</a>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-        <div class="photo-tip">
-          <strong>Consejo de encuadre</strong>
-          <p>Para una imagen limpia, usa el pedestal como eje y deja aire sobre la figura. En tomas abiertas, incorpora el borde de la plaza para mostrar la escala urbana. Evita fotografiar desde la calzada: el tráfico alrededor de la plaza es intenso.</p>
-        </div>
-      </section>
-
-      <section id="llegar" class="section transport-section">
-        <div class="transport-intro">
-          <p class="section-kicker">Cómo llegar</p>
-          <h2>En una de las intersecciones más reconocibles de San Salvador</h2>
-          <p>La plaza está en el encuentro del Paseo General Escalón y la Alameda Franklin Delano Roosevelt, conectada con ejes principales de la capital.</p>
-        </div>
-        <div class="transport-grid">
-          <article>
-            <h3>Transporte por aplicación / taxi</h3>
-            <p>Es la opción más sencilla si no conoces la circulación local. Indica “Plaza Salvador del Mundo” y acuerda un punto seguro para descender sin detenerte en carriles de flujo rápido.</p>
-          </article>
-          <article>
-            <h3>Autobús</h3>
-            <p>Varias rutas urbanas pasan por los corredores cercanos. Como los recorridos pueden cambiar, confirma la ruta y el sentido el mismo día con un servicio local de mapas o con el operador.</p>
-          </article>
-          <article>
-            <h3>En vehículo</h3>
-            <p>Llega por Paseo General Escalón o Alameda Roosevelt y anticipa el carril necesario. El entorno funciona como nodo vial y puede congestionarse en horas de mayor movimiento.</p>
-          </article>
-          <article>
-            <h3>Estacionamiento</h3>
-            <p>No cuentes con un estacionamiento turístico dedicado dentro de la plaza. Prefiere estacionamientos privados del entorno y respeta señalización, accesos y restricciones vigentes.</p>
-          </article>
-        </div>
-        <div class="address-panel">
-          <div class="address-main">
-            <span>Dirección oficial</span>
-            <strong>{attraction.name} — {attraction.street}</strong>
-            <small>{attraction.city}, {attraction.country} · Plus Code {attraction.plusCode}</small>
-          </div>
-          <div class="address-meta">
-            <div><span>Teléfono</span><strong>{attraction.phone}</strong></div>
-            <div><span>Horario</span><strong>24 h · acceso gratuito</strong></div>
-            <div><span>Valoración Google</span><strong>{ratingDisplay}/5 · {reviewDisplay} reseñas</strong></div>
-          </div>
-          <a class="button button-dark" href={attraction.mapsUrl} target="_blank" rel="noopener">Abrir en Google Maps</a>
-        </div>
-        <div class="map-wrap">
-          <iframe
-            title="Mapa del Monumento al Divino Salvador del Mundo en San Salvador"
-            src={attraction.mapsEmbedSrc}
-            width="600"
-            height="450"
-            style="border:0;"
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          ></iframe>
-        </div>
-        <div class="map-note">
-          <p>Para información oficial y actualizaciones turísticas de la región, visita el <a href={attraction.tourismUrl} target="_blank" rel="noopener noreferrer">Portal Oficial de Turismo de El Salvador (El Salvador Travel)</a> y la página del <a href={attraction.culturaUrl} target="_blank" rel="noopener noreferrer">Ministerio de Cultura de El Salvador</a>.</p>
-        </div>
-      </section>
-
-      <section id="alrededores" class="section around-section paper-grid">
-        <div class="section-heading">
-          <p class="section-kicker">Alrededores</p>
-          <h2>Completa la visita con ciudad, cultura y cocina salvadoreña</h2>
-        </div>
-        <div class="around-columns">
-          <div>
-            <h3>Qué comer cerca</h3>
-            <div class="around-list">
-              <article><span>01</span><div><h4>Cocina salvadoreña</h4><p>Busca pupusas, yuca, panes con pollo y desayunos típicos en la zona de Escalón y corredores cercanos.</p></div></article>
-              <article><span>02</span><div><h4>Café y sobremesa</h4><p>San Salvador tiene una fuerte cultura de café; la zona occidental de la capital reúne cafeterías y opciones para una pausa antes o después de la plaza.</p></div></article>
-              <article><span>03</span><div><h4>Opciones internacionales</h4><p>Alrededor de Escalón y San Benito encontrarás restaurantes casuales y de mesa de distintas cocinas, útiles para combinar con una visita corta.</p></div></article>
-            </div>
-          </div>
-          <div>
-            <h3>Qué ver después</h3>
-            <div class="around-list">
-              <article><span>01</span><div><h4>Parque Cuscatlán</h4><p>Gran espacio verde urbano sobre la Alameda Roosevelt, adecuado para continuar a pie o en un traslado corto.</p></div></article>
-              <article><span>02</span><div><h4>Museo de Arte de El Salvador</h4><p>Una buena continuación para entender el arte salvadoreño moderno y contemporáneo en la zona de San Benito.</p></div></article>
-              <article><span>03</span><div><h4>Centro Histórico de San Salvador</h4><p>Plazas, arquitectura cívica y templos permiten ampliar la lectura histórica de la capital en una segunda parada.</p></div></article>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section stay-section" aria-labelledby="alojamiento-title">
-        <div class="stay-copy">
-          <p class="section-kicker">Dónde alojarse</p>
-          <h2 id="alojamiento-title">Escalón para practicidad; San Benito para cultura y vida urbana</h2>
-          <p>Si el monumento forma parte de una estancia corta en la capital, Escalón resulta práctico por su cercanía y conexiones. San Benito ofrece una base cómoda para combinar museos, restaurantes y otros puntos del oeste de San Salvador.</p>
-          <p class="muted">Antes de reservar, compara acceso vehicular, estacionamiento del alojamiento y tiempos reales de traslado en la franja horaria que planeas usar.</p>
-        </div>
-        <div class="stay-mark" aria-hidden="true"><span></span><b>SV</b></div>
-      </section>
-
-      <section id="faq" class="section faq-section">
-        <div class="section-heading narrow">
-          <p class="section-kicker">Preguntas frecuentes</p>
-          <h2>Lo esencial antes de ir</h2>
-        </div>
-        <div class="faq-list">
-          {faqs.map((item) => (
-            <details>
-              <summary>{item.q}</summary>
-              <p>{item.a}</p>
-            </details>
-          ))}
-        </div>
-      </section>
-
-      <section id="fuentes" class="section source-section" aria-labelledby="fuentes-title">
-        <div class="source-intro">
-          <p class="section-kicker">Fuentes & créditos</p>
-          <h2 id="fuentes-title">Información trazable, fotografías con licencia abierta</h2>
-          <p class="source-note">La reseña histórica se apoya en publicaciones del Ministerio de Cultura de El Salvador, material educativo institucional y fuentes universitarias. Los datos prácticos pueden cambiar por eventos, obras o regulación local; compruébalos antes de tu visita.</p>
-        </div>
-        <div class="source-body">
-          <h3>Fuentes oficiales y de referencia</h3>
-          <ul class="source-links">
-            <li>
-              <a href={attraction.culturaUrl} target="_blank" rel="noopener noreferrer">Ministerio de Cultura de El Salvador</a>
-              <span>Historia del monumento, de la plaza y declaratoria como Bien Cultural.</span>
-            </li>
-            <li>
-              <a href={attraction.tourismUrl} target="_blank" rel="noopener noreferrer">El Salvador Travel — Portal oficial de turismo</a>
-              <span>Información turística nacional y regional de El Salvador.</span>
-            </li>
-            <li>
-              <a href={attraction.alcaldiaUrl} target="_blank" rel="noopener noreferrer">Alcaldía Municipal de San Salvador</a>
-              <span>Información municipal de la capital.</span>
-            </li>
-            <li>
-              <a href={attraction.mapsUrl} target="_blank" rel="noopener noreferrer">Google Maps — Monumento al Divino Salvador del Mundo</a>
-              <span>Ficha pública del lugar: dirección, teléfono y valoración {ratingDisplay}/5 con {reviewDisplay} reseñas.</span>
-            </li>
-          </ul>
-          <h3>Créditos y propiedad de las fotografías</h3>
-          <p>Todas las fotografías mostradas en este sitio web pertenecen a sus autores originales y su copyright se reserva a los fotógrafos; se publican con atribución y licencia CC BY-SA 3.0. Consulta <a href="/PHOTO-SOURCES.md">PHOTO-SOURCES.md</a> en el paquete del proyecto para los enlaces de origen de cada imagen.</p>
-          <p class="source-note">Este sitio es una guía de visita independiente y no está afiliado a la administración del monumento ni a las instituciones citadas.</p>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div class="footer-brand">
-        <img src="/icons/favicon.svg" width="46" height="46" alt="" />
-        <div><strong>Monumento al Divino Salvador del Mundo</strong><span>{attraction.address} · {attraction.phone}</span></div>
-      </div>
-      <div class="footer-links">
-        <button type="button" data-open-dialog="privacy">Privacidad</button>
-        <button type="button" data-open-dialog="terms">Términos</button>
-        <button type="button" data-open-dialog="cookies">Cookies</button>
-      </div>
-      <p class="disclaimer">Guía de visita independiente; no es el sitio oficial de la Alcaldía de San Salvador, del Ministerio de Cultura ni de la administración de la plaza.</p>
-      <p class="photo-credit">Todas las fotografías mostradas en este sitio web pertenecen a sus autores originales; su copyright se reserva a los fotógrafos.</p>
-    </footer>
-
-    <div class="cookie-banner" data-cookie-banner hidden>
-      <div><strong>Preferencias de medición</strong><p>Usamos Google Analytics solo si aceptas cookies de analítica. Las necesarias para recordar tu elección no requieren consentimiento.</p></div>
-      <div class="cookie-actions">
-        <button class="button button-primary" type="button" data-cookie-accept>Aceptar analítica</button>
-        <button class="button button-ghost-dark" type="button" data-cookie-reject>Solo necesarias</button>
-        <button class="text-button" type="button" data-open-dialog="cookies">Configurar</button>
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  path="/"
+  preload={hero.src}
+  schema={schema}
+>
+  <section id="inicio" class="hero" aria-labelledby="hero-title">
+    <img
+      class="hero-photo"
+      src={hero.src}
+      alt={hero.alt}
+      width="1280"
+      height="721"
+      decoding="async"
+    />
+    <div class="hero-shade"></div>
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-content">
+      <p class="eyebrow">Hito cívico-religioso · 1942 — hoy</p>
+      <h1 id="hero-title">
+        Monumento al Divino Salvador del Mundo<span class="hero-loc">San Salvador · El Salvador</span>
+      </h1>
+      <p class="hero-lead">
+        Cristo sobre el mundo. Una imagen monumental que resume fe, memoria urbana e identidad
+        salvadoreña en el corazón de la capital.
+      </p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#visita">Planear la visita</a>
+        <a class="button button-ghost" href="/historia/">Conocer su historia</a>
       </div>
     </div>
+    <div class="hero-credit">Foto: {hero.author} · {hero.license}</div>
+    <div class="hero-seal" aria-hidden="true">
+      <span class="seal-globe"></span>
+      <span class="seal-axis"></span>
+      <span class="seal-base"></span>
+    </div>
+  </section>
 
-    <dialog id="privacy" class="legal-dialog">
-      <div class="dialog-inner">
-        <button class="dialog-close" type="button" data-close-dialog aria-label="Cerrar">×</button>
-        <p class="section-kicker">Privacidad</p>
-        <h2>Política de privacidad</h2>
-        <p>Este sitio es informativo y no solicita cuentas, formularios de registro ni datos de pago. Si autorizas analítica, Google Analytics 4 puede recibir datos técnicos y de uso de acuerdo con su propia política.</p>
-        <p>La preferencia de cookies se guarda localmente en tu navegador. Puedes cambiarla desde “Cookies” en el pie de página.</p>
+  <section class="fact-band" aria-label="Información esencial">
+    <div><span>Horario</span><strong>Abierto 24 horas</strong></div>
+    <div><span>Entrada</span><strong>Acceso gratuito</strong></div>
+    <div><span>Tiempo sugerido</span><strong>30–60 min</strong></div>
+    <div><span>Valoración</span><strong>{RATING_DISPLAY}/5 · {REVIEW_DISPLAY} reseñas</strong></div>
+  </section>
+
+  <section id="acerca" class="section about-section" aria-labelledby="acerca-title">
+    <div class="about-grid">
+      <div class="prose">
+        <p class="section-kicker">Acerca del monumento</p>
+        <h2 id="acerca-title">Sobre el Monumento al Divino Salvador del Mundo en San Salvador</h2>
+        <p class="lede">
+          El <strong>Monumento al Divino Salvador del Mundo</strong> —en inglés
+          <em>{ATTRACTION.englishName}</em>, nombre con el que figura en Google Maps— es el conjunto
+          escultórico que preside la <strong>{ATTRACTION.commonName}</strong>, el hito central de
+          <strong>{ATTRACTION.city}</strong>, capital de <strong>{ATTRACTION.country}</strong>. Su
+          figura de Cristo sobre el globo resume, en una sola imagen, la relación entre la capital, la
+          tradición religiosa y la identidad salvadoreña.
+        </p>
+        <p>
+          La escultura de 1942 se eleva en una de las intersecciones más visibles de la ciudad: el
+          cruce del <strong>Paseo General Escalón</strong> con la
+          <strong>Alameda Franklin Delano Roosevelt</strong>, en plena Plaza Salvador del Mundo.
+          Es una plaza pública abierta las 24 horas y de acceso gratuito.
+        </p>
+        <ul class="geo-chain" aria-label="Jerarquía geográfica del monumento">
+          <li>{ATTRACTION.name}</li>
+          <li>{ATTRACTION.city}</li>
+          <li>{ATTRACTION.region}</li>
+          <li>{ATTRACTION.country}</li>
+        </ul>
+        <p>
+          Por su posición central, la visita se combina fácilmente con el
+          <strong>Parque Cuscatlán</strong> y el <strong>Museo de Arte de El Salvador (MARTE)</strong>,
+          o continúa en un traslado corto hacia el <strong>Centro Histórico de San Salvador</strong>.
+        </p>
       </div>
-    </dialog>
+      <aside class="nap-card" aria-label="Datos del monumento">
+        <dl>
+          <div><dt>Nombre</dt><dd>{ATTRACTION.name}</dd></div>
+          <div><dt>Dirección</dt><dd>{ATTRACTION.address}</dd></div>
+          <div>
+            <dt>Teléfono</dt>
+            <dd><a href={`tel:${ATTRACTION.phoneE164}`}>{ATTRACTION.phone}</a></dd>
+          </div>
+          <div><dt>Plus Code</dt><dd>{ATTRACTION.plusCode}</dd></div>
+          <div><dt>Horario</dt><dd>Plaza abierta 24 h · acceso gratuito</dd></div>
+          <div><dt>Valoración Google</dt><dd>{RATING_DISPLAY}/5 · {REVIEW_DISPLAY} reseñas</dd></div>
+        </dl>
+        <a class="button button-primary" href={ATTRACTION.mapsUrl} target="_blank" rel="noopener">
+          Ver ubicación en Google Maps
+        </a>
+      </aside>
+    </div>
+  </section>
 
-    <dialog id="terms" class="legal-dialog">
-      <div class="dialog-inner">
-        <button class="dialog-close" type="button" data-close-dialog aria-label="Cerrar">×</button>
-        <p class="section-kicker">Términos</p>
-        <h2>Términos de uso</h2>
-        <p>La información se ofrece como orientación general para visitantes. Horarios, accesos, transporte, estacionamiento, eventos y condiciones del espacio público pueden cambiar sin aviso.</p>
-        <p>Verifica la información crítica con fuentes oficiales o servicios locales antes de desplazarte. Las marcas y nombres de terceros pertenecen a sus respectivos titulares.</p>
+  <section id="historia" class="section section-story paper-grid">
+    <div class="section-heading">
+      <p class="section-kicker">1942 — hoy</p>
+      <h2>Un monumento que terminó representando a todo un país</h2>
+    </div>
+    <div class="story-layout">
+      <div class="story-copy prose">
+        <p class="lede">
+          La Plaza Salvador del Mundo se construyó en 1942 para el Primer Congreso Eucarístico
+          Nacional. En su centro se elevó el conjunto que hoy identifica a San Salvador: una figura de
+          Cristo, de mármol de Carrara, sobre un globo terráqueo y un alto pedestal.
+        </p>
+        <p>
+          La escultura había sido encargada en memoria del expresidente Manuel Enrique Araujo y, antes
+          de llegar a la plaza, estuvo vinculada a su monumento funerario. Con el tiempo, su ubicación
+          en una de las principales intersecciones de la capital transformó la obra en referencia
+          cívica y punto de encuentro. El terremoto de 1986 la derribó; fue reconstruida y en 2012 la
+          plaza recibió reconocimiento como Bien Cultural.
+        </p>
+        <p>
+          <a class="text-link" href="/historia/">Leer la historia completa del monumento →</a>
+        </p>
       </div>
-    </dialog>
+      <aside class="timeline" aria-label="Hitos históricos">
+        <div class="timeline-item"><b>1942</b><span>Construcción de la plaza e instalación del monumento.</span></div>
+        <div class="timeline-item"><b>1986</b><span>El terremoto derriba la escultura; posteriormente es restaurada.</span></div>
+        <div class="timeline-item"><b>2012</b><span>La Plaza Salvador del Mundo es declarada Bien Cultural.</span></div>
+      </aside>
+    </div>
+  </section>
 
-    <dialog id="cookies" class="legal-dialog">
-      <div class="dialog-inner">
-        <button class="dialog-close" type="button" data-close-dialog aria-label="Cerrar">×</button>
-        <p class="section-kicker">Cookies</p>
-        <h2>Configuración de cookies</h2>
-        <div class="preference-row"><div><strong>Necesarias</strong><p>Guardan tu preferencia de privacidad.</p></div><span>Siempre activas</span></div>
-        <div class="preference-row"><div><strong>Analítica</strong><p>Google Analytics 4 (G-HXM22WWPKP), solo con consentimiento.</p></div><label class="switch"><input type="checkbox" data-analytics-toggle /><span></span></label></div>
-        <button class="button button-primary" type="button" data-save-preferences>Guardar preferencias</button>
+  <section class="section monument-anatomy" aria-labelledby="arquitectura-title">
+    <div class="anatomy-visual" aria-hidden="true">
+      <div class="figure-mark">✦</div>
+      <div class="globe-orbit"><div class="globe-core"></div></div>
+      <div class="pedestal-mark"></div>
+      <div class="plinth-mark"></div>
+    </div>
+    <div class="anatomy-copy">
+      <p class="section-kicker">Arquitectura & símbolo</p>
+      <h2 id="arquitectura-title">Una composición vertical: tierra, pedestal y figura</h2>
+      <p>
+        La lectura visual es inmediata. El globo azul y blanco concentra la mirada; encima se recorta
+        la figura de Cristo, mientras el pedestal blanco la separa del tránsito y del horizonte
+        urbano. Más que un edificio, es una pieza de monumentalidad cívico-religiosa diseñada para
+        verse a distancia.
+      </p>
+      <dl class="detail-list">
+        <div><dt>Material destacado</dt><dd>Escultura de mármol de Carrara</dd></div>
+        <div><dt>Lenguaje</dt><dd>Monumentalismo con simbolismo religioso</dd></div>
+        <div><dt>Composición</dt><dd>Eje vertical sobre plaza de traza romboidal</dd></div>
+        <div><dt>Valor cultural</dt><dd>Emblema visual de San Salvador y El Salvador</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="visita" class="section visit-section">
+    <div class="section-heading narrow">
+      <p class="section-kicker">Visita práctica</p>
+      <h2>Cómo recorrer la plaza sin perder su mejor perspectiva</h2>
+      <p>
+        El monumento se disfruta mejor como una secuencia de vistas: primero desde el borde urbano,
+        después desde el eje del pedestal y finalmente desde los laterales de la plaza.
+      </p>
+    </div>
+    <div class="route-grid">
+      <article><span>01</span><h3>Llegada y vista general</h3><p>Detente en un punto seguro del perímetro para leer el conjunto completo y su relación con las grandes avenidas.</p></article>
+      <article><span>02</span><h3>Eje frontal</h3><p>Acércate por los senderos de la plaza. El pedestal gana escala y la esfera se vuelve el centro de la composición.</p></article>
+      <article><span>03</span><h3>Giro lateral</h3><p>Rodea el monumento para buscar el perfil de Cristo y separar la silueta del fondo urbano.</p></article>
+      <article><span>04</span><h3>Luz de cierre</h3><p>Si visitas al final de la tarde, reserva unos minutos para el cambio de luz y la iluminación nocturna.</p></article>
+    </div>
+
+    <div class="visit-cards">
+      <article class="info-card"><p class="card-label">Horario</p><h3>24 horas</h3><p>La plaza funciona como espacio público abierto. En eventos, pueden existir cierres parciales o controles temporales.</p></article>
+      <article class="info-card"><p class="card-label">Entrada / costos</p><h3>Gratuito</h3><p>La visita al monumento no requiere una tarifa turística regular. Presupuesta solamente transporte, estacionamiento o consumos cercanos.</p></article>
+      <article class="info-card"><p class="card-label">Mejor momento</p><h3>Mañana o atardecer</h3><p>Menos calor, luz más lateral y mejores contrastes en el pedestal blanco y la esfera azul.</p></article>
+      <article class="info-card"><p class="card-label">Estancia sugerida</p><h3>30–60 minutos</h3><p>Suficiente para caminar, fotografiar y entender el monumento; amplía el tiempo si combinas la visita con el entorno.</p></article>
+    </div>
+  </section>
+
+  <section class="section photo-section" aria-labelledby="fotos-title">
+    <div class="section-heading">
+      <p class="section-kicker">Fotografía</p>
+      <h2 id="fotos-title">Los encuadres que mejor explican su escala</h2>
+    </div>
+    <div class="photo-grid photo-grid-pair">
+      {
+        highlights.map((photo) => (
+          <figure class="photo-frame">
+            <img
+              src={photo.src}
+              alt={photo.alt}
+              loading="lazy"
+              decoding="async"
+              width="1280"
+              height="960"
+            />
+            <figcaption>
+              <span>{photo.alt}</span>
+              <a href={photo.href} target="_blank" rel="license noopener">
+                {photo.author} · {photo.license}
+              </a>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+    <div class="photo-tip">
+      <strong>Consejo de encuadre</strong>
+      <p>
+        Para una imagen limpia, usa el pedestal como eje y deja aire sobre la figura. Evita fotografiar
+        desde la calzada: el tráfico alrededor de la plaza es intenso.
+        <a class="text-link" href="/fotos/">Ver los cuatro miradores recomendados →</a>
+      </p>
+    </div>
+  </section>
+
+  <section id="llegar" class="section transport-section">
+    <div class="transport-intro">
+      <p class="section-kicker">Cómo llegar</p>
+      <h2>En una de las intersecciones más reconocibles de San Salvador</h2>
+      <p>
+        La plaza está en el encuentro del Paseo General Escalón y la Alameda Franklin Delano
+        Roosevelt, conectada con los ejes principales de la capital (Plus Code {ATTRACTION.plusCode}).
+      </p>
+    </div>
+    <div class="transport-grid">
+      <article>
+        <h3>Transporte por aplicación / taxi</h3>
+        <p>Es la opción más sencilla si no conoces la circulación local. Indica “Plaza Salvador del Mundo” y acuerda un punto seguro para descender sin detenerte en carriles de flujo rápido.</p>
+      </article>
+      <article>
+        <h3>Autobús</h3>
+        <p>Varias rutas urbanas pasan por los corredores Roosevelt, Escalón y Manuel Enrique Araujo. Como los recorridos pueden cambiar, confirma la ruta y el sentido el mismo día.</p>
+      </article>
+      <article>
+        <h3>En vehículo</h3>
+        <p>Llega por Paseo General Escalón o Alameda Roosevelt y anticipa el carril necesario. El entorno funciona como nodo vial y puede congestionarse en horas punta.</p>
+      </article>
+      <article>
+        <h3>Estacionamiento</h3>
+        <p>No cuentes con un estacionamiento turístico dedicado dentro de la plaza. Prefiere estacionamientos privados del entorno y respeta señalización, accesos y restricciones vigentes.</p>
+      </article>
+    </div>
+    <div class="address-panel">
+      <div class="address-main">
+        <span>Dirección oficial</span>
+        <strong>{ATTRACTION.name} — {ATTRACTION.street}</strong>
+        <small>{ATTRACTION.city}, {ATTRACTION.country} · Plus Code {ATTRACTION.plusCode}</small>
       </div>
-    </dialog>
+      <div class="address-meta">
+        <div><span>Teléfono</span><strong>{ATTRACTION.phone}</strong></div>
+        <div><span>Horario</span><strong>24 h · acceso gratuito</strong></div>
+        <div><span>Valoración Google</span><strong>{RATING_DISPLAY}/5 · {REVIEW_DISPLAY} reseñas</strong></div>
+      </div>
+      <a class="button button-dark" href={ATTRACTION.mapsUrl} target="_blank" rel="noopener">
+        Abrir en Google Maps
+      </a>
+    </div>
+    <p class="map-cta">
+      <a class="text-link" href="/como-llegar/">Cómo llegar en bus, taxi, auto o a pie (con detalle) →</a>
+    </p>
+    <div class="map-wrap">
+      <iframe
+        title="Mapa del Monumento al Divino Salvador del Mundo en San Salvador"
+        src={ATTRACTION.mapsEmbedSrc}
+        width="600"
+        height="450"
+        style="border:0;"
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
+    </div>
+    <div class="map-note">
+      <p>
+        Para información oficial y actualizaciones turísticas de la región, visita el
+        <a href={ATTRACTION.tourismUrl} target="_blank" rel="noopener noreferrer">Portal Oficial de Turismo de El Salvador (El Salvador Travel)</a>
+        y la página del
+        <a href={ATTRACTION.culturaUrl} target="_blank" rel="noopener noreferrer">Ministerio de Cultura de El Salvador</a>.
+      </p>
+    </div>
+  </section>
 
-    <script is:inline>
-      (() => {
-        const GA_ID = 'G-HXM22WWPKP';
-        const COOKIE_KEY = 'salvador-mundo-analytics-consent';
-        let analyticsLoaded = false;
+  <section id="alrededores" class="section around-section paper-grid">
+    <div class="section-heading">
+      <p class="section-kicker">Alrededores</p>
+      <h2>Completa la visita con ciudad, cultura y cocina salvadoreña</h2>
+    </div>
+    <div class="around-columns">
+      <div>
+        <h3>Qué comer cerca</h3>
+        <div class="around-list">
+          <article><span>01</span><div><h4>Cocina salvadoreña</h4><p>Busca pupusas, yuca, panes con pollo y desayunos típicos en la zona de Escalón y corredores cercanos.</p></div></article>
+          <article><span>02</span><div><h4>Café y sobremesa</h4><p>San Salvador tiene una fuerte cultura de café; la zona occidental de la capital reúne cafeterías y opciones para una pausa antes o después de la plaza.</p></div></article>
+          <article><span>03</span><div><h4>Opciones internacionales</h4><p>Alrededor de Escalón y San Benito encontrarás restaurantes casuales y de mesa de distintas cocinas, útiles para combinar con una visita corta.</p></div></article>
+        </div>
+      </div>
+      <div>
+        <h3>Qué ver después</h3>
+        <div class="around-list">
+          <article><span>01</span><div><h4>Parque Cuscatlán</h4><p>Gran espacio verde urbano sobre la Alameda Roosevelt, adecuado para continuar a pie o en un traslado corto.</p></div></article>
+          <article><span>02</span><div><h4>Museo de Arte de El Salvador</h4><p>Una buena continuación para entender el arte salvadoreño moderno y contemporáneo en la zona de San Benito.</p></div></article>
+          <article><span>03</span><div><h4>Centro Histórico de San Salvador</h4><p>Plazas, arquitectura cívica y templos permiten ampliar la lectura histórica de la capital en una segunda parada.</p></div></article>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        const loadAnalytics = () => {
-          if (analyticsLoaded || document.querySelector('script[data-ga4]')) return;
-          analyticsLoaded = true;
-          const script = document.createElement('script');
-          script.async = true;
-          script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-          script.dataset.ga4 = 'true';
-          document.head.appendChild(script);
-          window.dataLayer = window.dataLayer || [];
-          window.gtag = function(){ window.dataLayer.push(arguments); };
-          window.gtag('js', new Date());
-          window.gtag('config', GA_ID, { anonymize_ip: true });
-        };
+  <section class="section stay-section" aria-labelledby="alojamiento-title">
+    <div class="stay-copy">
+      <p class="section-kicker">Dónde alojarse</p>
+      <h2 id="alojamiento-title">Escalón para practicidad; San Benito para cultura y vida urbana</h2>
+      <p>
+        Si el monumento forma parte de una estancia corta en la capital, Escalón resulta práctico por
+        su cercanía y conexiones. San Benito ofrece una base cómoda para combinar museos, restaurantes
+        y otros puntos del oeste de San Salvador.
+      </p>
+      <p class="muted">
+        Antes de reservar, compara acceso vehicular, estacionamiento del alojamiento y tiempos reales
+        de traslado en la franja horaria que planeas usar.
+      </p>
+    </div>
+    <div class="stay-mark" aria-hidden="true"><span></span><b>SV</b></div>
+  </section>
 
-        const setConsent = (allowed) => {
-          localStorage.setItem(COOKIE_KEY, allowed ? 'granted' : 'denied');
-          const toggle = document.querySelector('[data-analytics-toggle]');
-          if (toggle) toggle.checked = allowed;
-          const banner = document.querySelector('[data-cookie-banner]');
-          if (banner) banner.hidden = true;
-          if (allowed) loadAnalytics();
-        };
+  <section id="guias" class="section guides-section" aria-labelledby="guias-title">
+    <div class="section-heading narrow">
+      <p class="section-kicker">Lecturas recomendadas</p>
+      <h2 id="guias-title">Profundiza en la historia, el acceso y la fotografía</h2>
+    </div>
+    <div class="related-grid">
+      {
+        GUIDES.map((guide) => (
+          <a class="related-card" href={guide.href}>
+            <h3>{guide.title}</h3>
+            <p>{guide.text}</p>
+            <span>Leer →</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
 
-        const stored = localStorage.getItem(COOKIE_KEY);
-        const banner = document.querySelector('[data-cookie-banner]');
-        if (!stored && banner) banner.hidden = false;
-        if (stored === 'granted') loadAnalytics();
+  <section id="faq" class="section faq-section">
+    <div class="section-heading narrow">
+      <p class="section-kicker">Preguntas frecuentes</p>
+      <h2>Lo esencial antes de ir</h2>
+    </div>
+    <div class="faq-list">
+      {
+        HOME_FAQS.map((item) => (
+          <details>
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
 
-        document.querySelector('[data-cookie-accept]')?.addEventListener('click', () => setConsent(true));
-        document.querySelector('[data-cookie-reject]')?.addEventListener('click', () => setConsent(false));
-
-        const analyticsToggle = document.querySelector('[data-analytics-toggle]');
-        if (analyticsToggle) analyticsToggle.checked = stored === 'granted';
-        document.querySelector('[data-save-preferences]')?.addEventListener('click', () => {
-          setConsent(Boolean(analyticsToggle?.checked));
-          document.querySelector('#cookies')?.close();
-        });
-
-        document.querySelectorAll('[data-open-dialog]').forEach((button) => {
-          button.addEventListener('click', () => {
-            const id = button.getAttribute('data-open-dialog');
-            const dialog = id ? document.getElementById(id) : null;
-            if (dialog?.showModal) dialog.showModal();
-          });
-        });
-        document.querySelectorAll('[data-close-dialog]').forEach((button) => {
-          button.addEventListener('click', () => button.closest('dialog')?.close());
-        });
-        document.querySelectorAll('dialog').forEach((dialog) => {
-          dialog.addEventListener('click', (event) => {
-            if (event.target === dialog) dialog.close();
-          });
-        });
-
-        const toggle = document.querySelector('[data-nav-toggle]');
-        const nav = document.querySelector('[data-nav]');
-        toggle?.addEventListener('click', () => {
-          const open = toggle.getAttribute('aria-expanded') === 'true';
-          toggle.setAttribute('aria-expanded', String(!open));
-          nav?.classList.toggle('is-open', !open);
-        });
-        nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-          toggle?.setAttribute('aria-expanded', 'false');
-          nav.classList.remove('is-open');
-        }));
-
-        if ('serviceWorker' in navigator && location.protocol === 'https:') {
-          addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js').catch(() => {});
-          });
-        }
-      })();
-    </script>
-  </body>
-</html>
+  <section id="fuentes" class="section source-section" aria-labelledby="fuentes-title">
+    <div class="source-intro">
+      <p class="section-kicker">Fuentes & créditos</p>
+      <h2 id="fuentes-title">Información trazable, fotografías con licencia abierta</h2>
+      <p class="source-note">
+        La reseña histórica se apoya en publicaciones del Ministerio de Cultura de El Salvador,
+        material educativo institucional y fuentes universitarias. Los datos prácticos pueden cambiar
+        por eventos, obras o regulación local; compruébalos antes de tu visita.
+      </p>
+    </div>
+    <div class="source-body">
+      <h3>Fuentes oficiales y de referencia</h3>
+      <ul class="source-links">
+        <li>
+          <a href={ATTRACTION.culturaUrl} target="_blank" rel="noopener noreferrer">Ministerio de Cultura de El Salvador</a>
+          <span>Historia del monumento, de la plaza y declaratoria como Bien Cultural.</span>
+        </li>
+        <li>
+          <a href={ATTRACTION.tourismUrl} target="_blank" rel="noopener noreferrer">El Salvador Travel — Portal oficial de turismo</a>
+          <span>Información turística nacional y regional de El Salvador.</span>
+        </li>
+        <li>
+          <a href={ATTRACTION.alcaldiaUrl} target="_blank" rel="noopener noreferrer">Alcaldía Municipal de San Salvador</a>
+          <span>Información municipal de la capital.</span>
+        </li>
+        <li>
+          <a href={ATTRACTION.mapsUrl} target="_blank" rel="noopener noreferrer">Google Maps — Monumento al Divino Salvador del Mundo</a>
+          <span>Ficha pública del lugar: dirección, teléfono y valoración {RATING_DISPLAY}/5 con {REVIEW_DISPLAY} reseñas.</span>
+        </li>
+      </ul>
+      <h3>Créditos y propiedad de las fotografías</h3>
+      <p>
+        Todas las fotografías mostradas en este sitio web pertenecen a sus autores originales y su
+        copyright se reserva a los fotógrafos; se publican con atribución y licencia CC BY-SA 3.0.
+        Consulta <a href="/PHOTO-SOURCES.md">PHOTO-SOURCES.md</a> en el paquete del proyecto para los
+        enlaces de origen de cada imagen.
+      </p>
+      <p class="source-note">
+        Este sitio es una guía de visita independiente y no está afiliado a la administración del
+        monumento ni a las instituciones citadas.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

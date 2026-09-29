@@ -8,6 +8,8 @@ dist/
 # logs
 npm-debug.log*
 pnpm-debug.log*
+*.log
+*.err
 
 # Cloudflare local artifacts
 .wrangler/

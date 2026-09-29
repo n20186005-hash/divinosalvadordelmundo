@@ -1,5 +1,5 @@
-/* Monumento al Divino Salvador del Mundo — Service Worker v2026-09-09 */
-const CACHE = 'salvador-mundo-v2026-09-09';
+/* Monumento al Divino Salvador del Mundo — Service Worker v2026-09-29 */
+const CACHE = 'salvador-mundo-v2026-09-29';
 const OFFLINE_URL = '/';
 
 self.addEventListener('install', (event) => {

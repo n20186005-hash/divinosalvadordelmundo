@@ -1,6 +1,26 @@
 # Informe de auto-verificación
 
-## Estado verificado (2026-09-09)
+## Estado verificado (2026-09-29)
+
+Dominio configurado (`https://divinosalvadordelmundo.com`) y compilación verificada en el sandbox Windows con Node 24.19.0:
+
+- `node node_modules/astro/bin/astro.mjs check` → 0 errores, 0 warnings, 0 hints (14 archivos).
+- `node node_modules/astro/bin/astro.mjs build` → 5 páginas: `/`, `/historia/`, `/como-llegar/`, `/fotos/`, `/404.html` + `sitemap-index.xml`.
+- `node scripts/verify-dist.mjs` → sin violaciones.
+- JSON-LD de las 5 páginas analizado con `JSON.parse`: `WebSite`+`Organization` en todas; `TouristAttraction`, `FAQPage`, `BreadcrumbList` y `WebPage` en la portada; `WebPage`+`BreadcrumbList`+`FAQPage` en las guías. Todos válidos.
+- `dist/_headers` y `dist/_redirects` presentes en el build.
+
+### Optimización SEO aplicada (datos de Search Console)
+
+- Canonicalización: `public/_redirects` con 301 de `http://` y `https://www.` al apex; canonical absoluto en las 4 páginas indexables; la 404 no emite canonical y sí `noindex`.
+- CTR: títulos y descripciones reescritos con intención de búsqueda (`historia`, `cómo llegar`, `fotos`, `horario`, `acceso gratuito`).
+- Cobertura de consultas: tres guías long-tail nuevas con `FAQPage` y `BreadcrumbList` propios y enlazado interno cruzado desde la portada.
+- Datos actualizados: valoración 4.6 con 21 045 reseñas.
+- Rendimiento móvil: las fotografías pasan de `upload.wikimedia.org` a copias locales en `/images/` y la imagen LCP se precarga con `rel="preload"`.
+
+## Histórico
+
+### Estado verificado (2026-09-09)
 
 La entrega ya tiene dominio configurado (`https://divinosalvadordelmundo.com`) y fue compilada y verificada:
 

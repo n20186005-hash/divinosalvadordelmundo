@@ -1,0 +1,179 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ATTRACTION, GUIDES, PHOTOS } from '../data/site';
+import { HISTORIA_FAQS } from '../data/faqs';
+import { buildBreadcrumbSchema, buildFaqSchema, buildWebPageSchema } from '../lib/schema';
+
+const pageTitle = 'Historia del Monumento al Divino Salvador del Mundo (1942)';
+const pageDescription =
+  'Historia del Monumento al Divino Salvador del Mundo en San Salvador: escultura de mármol de Carrara de 1942, Primer Congreso Eucarístico, terremoto de 1986 y Bien Cultural 2012.';
+
+const site = Astro.site;
+const path = '/historia/';
+const schema = [
+  buildWebPageSchema(site, path, pageTitle, pageDescription),
+  buildBreadcrumbSchema(site, [
+    { name: 'Inicio', path: '/' },
+    { name: 'Historia' },
+  ]),
+  buildFaqSchema(HISTORIA_FAQS),
+];
+const related = GUIDES.filter((guide) => guide.href !== path);
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} path={path} schema={schema}>
+  <header class="page-hero">
+    <nav class="crumbs" aria-label="Ruta de navegación">
+      <a href="/">Inicio</a><span aria-hidden="true">›</span><span>Historia</span>
+    </nav>
+    <p class="section-kicker">1942 — hoy</p>
+    <h1>Historia del Monumento al Divino Salvador del Mundo</h1>
+    <p class="page-lead">
+      Cómo una escultura concebida como memorial privado terminó convertida en la imagen más
+      reconocible de {ATTRACTION.city} y en uno de los símbolos visuales de {ATTRACTION.country}.
+    </p>
+  </header>
+
+  <section class="section prose-section" aria-labelledby="origen-title">
+    <div class="prose">
+      <p class="section-kicker">Origen</p>
+      <h2 id="origen-title">De monumento funerario a emblema nacional</h2>
+      <p class="lede">
+        La imagen de Cristo fue encargada originalmente en memoria del expresidente Manuel Enrique
+        Araujo y estuvo vinculada a su monumento funerario. La familia Araujo la donó al arzobispo
+        Luis Chávez y González, y en 1942 fue colocada en la plaza construida con motivo del Primer
+        Congreso Eucarístico Nacional.
+      </p>
+      <p>
+        Aquella decisión cambió el destino de la pieza. Instalada en el cruce del Paseo General
+        Escalón con la Alameda Franklin Delano Roosevelt, la escultura pasó de ser un memorial a
+        convertirse en un punto de referencia urbana: un hito visible desde varios ejes de la capital
+        y, con los años, una postal repetida del país.
+      </p>
+      <p>
+        El nombre popular del lugar —<strong>{ATTRACTION.commonName}</strong>— viene de la advocación
+        del Divino Salvador del Mundo, patrono de El Salvador, y hoy identifica tanto a la plaza como
+        al nudo vial que la rodea.
+      </p>
+    </div>
+  </section>
+
+  <section class="section paper-grid timeline-section" aria-labelledby="cronologia-title">
+    <div class="section-heading">
+      <p class="section-kicker">Cronología</p>
+      <h2 id="cronologia-title">Tres fechas que explican el monumento</h2>
+    </div>
+    <div class="story-layout">
+      <div class="story-copy prose">
+        <p>
+          El conjunto escultórico se lee mejor en tres momentos: su instalación en 1942, la destrucción
+          parcial provocada por el terremoto de 1986 y el reconocimiento cultural de la plaza en 2012.
+          Entre medias, la ciudad creció a su alrededor y consolidó el monumento como lugar de
+          encuentro cívico y religioso.
+        </p>
+      </div>
+      <aside class="timeline" aria-label="Hitos históricos del monumento">
+        <div class="timeline-item">
+          <b>1942</b>
+          <span>Se construye la plaza y se instala el monumento para el Primer Congreso Eucarístico Nacional.</span>
+        </div>
+        <div class="timeline-item">
+          <b>1986</b>
+          <span>El terremoto derriba y daña gravemente la estatua, que después es reconstruida y restaurada.</span>
+        </div>
+        <div class="timeline-item">
+          <b>2012</b>
+          <span>La Plaza Salvador del Mundo es declarada Bien Cultural por la autoridad cultural salvadoreña.</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section detail-split" aria-labelledby="materiales-title">
+    <figure class="figure-card">
+      <img
+        src={PHOTOS.vertical.src}
+        alt={PHOTOS.vertical.alt}
+        loading="lazy"
+        decoding="async"
+        width="960"
+        height="1280"
+      />
+      <figcaption>
+        {PHOTOS.vertical.alt}.
+        <a href={PHOTOS.vertical.href} target="_blank" rel="license noopener">
+          {PHOTOS.vertical.author} · {PHOTOS.vertical.license}
+        </a>
+      </figcaption>
+    </figure>
+    <div class="anatomy-copy">
+      <p class="section-kicker" style="color: var(--blue)">Materiales y forma</p>
+      <h2 id="materiales-title" style="color: var(--deep)">Mármol de Carrara sobre un pedestal urbano</h2>
+      <p style="color: var(--muted)">
+        La escultura superior fue realizada en mármol de Carrara y traída desde Italia. Se apoya sobre
+        un globo terráqueo y un pedestal cuadrangular de concreto con revestimiento de apariencia
+        marmórea, una solución que refuerza la lectura vertical del conjunto y lo separa visualmente
+        del tráfico que lo rodea.
+      </p>
+      <dl class="detail-list detail-list-light">
+        <div><dt>Figura</dt><dd>Cristo de pie sobre el globo terráqueo</dd></div>
+        <div><dt>Material escultórico</dt><dd>Mármol de Carrara (Italia)</dd></div>
+        <div><dt>Soporte</dt><dd>Pedestal cuadrangular de concreto</dd></div>
+        <div><dt>Reconocimiento</dt><dd>Plaza declarada Bien Cultural en 2012</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section prose-section" aria-labelledby="significado-title">
+    <div class="prose">
+      <p class="section-kicker">Significado</p>
+      <h2 id="significado-title">Por qué el Divino Salvador del Mundo representa al país</h2>
+      <p>
+        El monumento integra identidad nacional, devoción religiosa y memoria urbana. La plaza
+        funciona como punto de encuentro y referencia durante celebraciones cívicas y religiosas,
+        especialmente las fiestas agostinas, cuando la imagen se ilumina y se convierte en escenario
+        de la ciudad.
+      </p>
+      <p>
+        También es un marcador mental: para muchos salvadoreños, “Salvador del Mundo” no es solo una
+        escultura, sino el nombre de un cruce, una parada y una dirección compartida. Esa doble
+        condición —símbolo y lugar— explica su permanencia en el imaginario colectivo.
+      </p>
+    </div>
+  </section>
+
+  <section class="section faq-section" aria-labelledby="faq-historia-title">
+    <div class="section-heading narrow">
+      <p class="section-kicker">Preguntas frecuentes</p>
+      <h2 id="faq-historia-title">Dudas habituales sobre su historia</h2>
+    </div>
+    <div class="faq-list">
+      {
+        HISTORIA_FAQS.map((item) => (
+          <details>
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section guides-section" aria-labelledby="seguir-title">
+    <div class="section-heading narrow">
+      <p class="section-kicker">Seguir leyendo</p>
+      <h2 id="seguir-title">Otras guías del monumento</h2>
+    </div>
+    <div class="related-grid">
+      {
+        related.map((guide) => (
+          <a class="related-card" href={guide.href}>
+            <h3>{guide.title}</h3>
+            <p>{guide.text}</p>
+            <span>Leer →</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

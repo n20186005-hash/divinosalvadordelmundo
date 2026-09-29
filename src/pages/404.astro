@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ATTRACTION, GUIDES, withSiteName } from '../data/site';
+
+const pageTitle = withSiteName('Página no encontrada');
+const pageDescription = `La página solicitada no existe en esta guía de visita del ${ATTRACTION.name}. Consulta la portada y las guías de historia, acceso y fotografía.`;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} path="/404/" schema={[]} noindex>
+  <header class="page-hero">
+    <p class="section-kicker">Error 404</p>
+    <h1>Página no encontrada</h1>
+    <p class="page-lead">
+      La dirección que buscas no existe o cambió de sitio. Desde aquí puedes volver a la guía de
+      visita del {ATTRACTION.name} en {ATTRACTION.city}.
+    </p>
+    <div class="hero-actions">
+      <a class="button button-primary" href="/">Ir a la portada</a>
+      <a class="button button-ghost" href="/como-llegar/">Cómo llegar</a>
+    </div>
+  </header>
+
+  <section class="section guides-section" aria-labelledby="guias-404-title">
+    <div class="section-heading narrow">
+      <p class="section-kicker">Guías disponibles</p>
+      <h2 id="guias-404-title">Contenido del sitio</h2>
+    </div>
+    <div class="related-grid">
+      <a class="related-card" href="/">
+        <h3>Portada</h3>
+        <p>Resumen del monumento: horario, acceso gratuito, valoración y mapa de la plaza.</p>
+        <span>Leer →</span>
+      </a>
+      {
+        GUIDES.map((guide) => (
+          <a class="related-card" href={guide.href}>
+            <h3>{guide.title}</h3>
+            <p>{guide.text}</p>
+            <span>Leer →</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

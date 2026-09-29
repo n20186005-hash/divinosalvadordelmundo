@@ -228,6 +228,72 @@ dialog::backdrop { background: rgba(7,24,48,.68); backdrop-filter: blur(4px); }
 .preference-row { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: 1rem 0; border-top: 1px solid var(--line); }.preference-row p { margin: .2rem 0 0; font-size: .84rem; }.preference-row > span { font-size: .78rem; color: var(--muted); white-space: nowrap; }
 .switch { position: relative; width: 48px; height: 28px; flex: 0 0 auto; }.switch input { opacity: 0; width: 0; height: 0; }.switch span { position: absolute; inset: 0; border-radius: 999px; background: #c5ccd5; cursor: pointer; transition: .2s; }.switch span::before { content: ''; position: absolute; left: 3px; top: 3px; width: 22px; height: 22px; border-radius: 50%; background: white; transition: .2s; }.switch input:checked + span { background: var(--blue); }.switch input:checked + span::before { transform: translateX(20px); }
 
+/* Páginas interiores */
+.page-hero {
+  padding: 11.5rem max(1rem, calc((100vw - 1180px) / 2)) 3.5rem;
+  background: var(--deep);
+  color: white;
+}
+.page-hero .section-kicker { color: #91c4ff; }
+.page-hero h1 {
+  margin: .5rem 0 0;
+  max-width: 1000px;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -.04em;
+  line-height: 1;
+  font-size: clamp(2.6rem, 5.6vw, 5.2rem);
+  text-wrap: balance;
+}
+.page-lead { max-width: 760px; margin: 1.6rem 0 0; font-size: clamp(1rem, 1.6vw, 1.22rem); color: #e3edfb; }
+.page-hero .hero-actions { margin-top: 2rem; }
+.crumbs { display: flex; align-items: center; gap: .5rem; margin-bottom: 1.6rem; font-size: .82rem; color: #9fb6d6; text-transform: uppercase; letter-spacing: .12em; font-weight: 800; }
+.crumbs a { color: #cfe0ff; text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+.prose-section { background: #fff; }
+.prose-section h2 { margin: .2rem 0 1.6rem; font-family: var(--font-serif); font-weight: 500; letter-spacing: -.035em; line-height: 1.05; font-size: clamp(2.1rem, 4.2vw, 3.6rem); color: var(--deep); text-wrap: balance; }
+
+.text-link { color: var(--blue); font-weight: 800; }
+.map-cta { margin: 1.2rem 0 0; font-size: .95rem; }
+
+.guides-section { background: var(--paper); }
+.related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+.related-card { display: flex; flex-direction: column; background: #fff; border: 1px solid #e7e4dc; border-radius: 16px; padding: 1.7rem 1.6rem; text-decoration: none; transition: transform .2s, box-shadow .2s; }
+.related-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); }
+.related-card h3 { margin: 0; font-family: var(--font-serif); font-size: 1.5rem; color: var(--deep); }
+.related-card p { margin: .6rem 0 1.2rem; color: var(--muted); font-size: .95rem; }
+.related-card span { margin-top: auto; color: var(--blue); font-weight: 800; font-size: .88rem; }
+
+.photo-grid-pair { grid-template-columns: 1fr 1fr; }
+.figure-card { margin: 0; background: #fff; border: 1px solid #e7e4dc; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-soft); }
+.figure-card img { width: 100%; height: 100%; max-height: 620px; object-fit: cover; }
+.figure-card figcaption { padding: .9rem 1.1rem; font-size: .78rem; color: var(--muted); }
+.figure-card figcaption a { color: var(--blue); display: block; margin-top: .2rem; }
+
+.detail-split { display: grid; grid-template-columns: .8fr 1.2fr; gap: 4.5rem; align-items: center; background: #fff; }
+.detail-list-light { color: var(--ink); border-top: 1px solid var(--line); }
+.detail-list-light div { border-bottom: 1px solid var(--line); }
+.detail-list-light dt { color: var(--blue); }
+.detail-list-light dd { color: var(--ink); }
+
+.address-panel-wide { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.4fr) auto; }
+.spot-best { margin-top: .35rem; font-size: .85rem; color: var(--blue); font-weight: 800; }
+
+@media (max-width: 900px) {
+  .page-hero { padding-top: 8.5rem; }
+  .detail-split { grid-template-columns: 1fr; gap: 2.5rem; }
+  .photo-grid-pair { grid-template-columns: 1fr; }
+  .address-panel-wide { grid-template-columns: 1fr 1fr; }
+  .address-panel-wide .button { grid-column: 1/-1; }
+}
+
+@media (max-width: 600px) {
+  .page-hero { padding-top: 7.5rem; padding-bottom: 2.5rem; }
+  .address-panel-wide { grid-template-columns: 1fr; }
+  .address-panel-wide .button { grid-column: auto; }
+}
+
 @media (max-width: 900px) {
   .site-header { top: .6rem; }
   .nav-toggle { display: block; }

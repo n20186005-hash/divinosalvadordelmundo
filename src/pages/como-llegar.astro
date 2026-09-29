@@ -1,0 +1,173 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ATTRACTION, GUIDES, RATING_DISPLAY, REVIEW_DISPLAY } from '../data/site';
+import { TRANSPORT_FAQS } from '../data/faqs';
+import { buildBreadcrumbSchema, buildFaqSchema, buildWebPageSchema } from '../lib/schema';
+
+const pageTitle = 'Cómo llegar al Monumento al Divino Salvador del Mundo';
+const pageDescription =
+  'Cómo llegar al Monumento al Divino Salvador del Mundo en San Salvador: dirección, Plus Code PQ2G+G6, rutas de autobús por Roosevelt y Escalón, taxi, auto, estacionamiento y mapa.';
+
+const site = Astro.site;
+const path = '/como-llegar/';
+const schema = [
+  buildWebPageSchema(site, path, pageTitle, pageDescription),
+  buildBreadcrumbSchema(site, [
+    { name: 'Inicio', path: '/' },
+    { name: 'Cómo llegar' },
+  ]),
+  buildFaqSchema(TRANSPORT_FAQS),
+];
+const related = GUIDES.filter((guide) => guide.href !== path);
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} path={path} schema={schema}>
+  <header class="page-hero">
+    <nav class="crumbs" aria-label="Ruta de navegación">
+      <a href="/">Inicio</a><span aria-hidden="true">›</span><span>Cómo llegar</span>
+    </nav>
+    <p class="section-kicker">Ubicación y acceso</p>
+    <h1>Cómo llegar al Monumento al Divino Salvador del Mundo</h1>
+    <p class="page-lead">
+      El monumento se levanta sobre la {ATTRACTION.commonName}, en el cruce del Paseo General Escalón
+      con la Alameda Franklin Delano Roosevelt. Es una de las intersecciones más conocidas de
+      {ATTRACTION.city}; aquí tienes las cuatro formas habituales de llegar.
+    </p>
+  </header>
+
+  <section class="section transport-section" aria-labelledby="opciones-title">
+    <div class="section-heading narrow">
+      <p class="section-kicker">Opciones de acceso</p>
+      <h2 id="opciones-title">Taxi, autobús, vehículo propio o a pie</h2>
+      <p>
+        No existe un acceso vehicular propio dentro de la plaza: el monumento está rodeado por vías de
+        tráfico intenso. Elige el modo según tu punto de partida y confirma rutas el mismo día.
+      </p>
+    </div>
+    <div class="transport-grid">
+      <article>
+        <h3>Taxi o transporte por aplicación</h3>
+        <p>
+          Es la opción más sencilla si no conoces la circulación local. Indica “Plaza Salvador del
+          Mundo” y acuerda un punto seguro para descender, sin detenerte en carriles de flujo rápido.
+        </p>
+      </article>
+      <article>
+        <h3>Autobús urbano</h3>
+        <p>
+          Varias rutas circulan por los ejes Alameda Franklin Delano Roosevelt, Paseo General Escalón y
+          Manuel Enrique Araujo. Como los recorridos pueden variar, confirma la ruta y el sentido el
+          mismo día con un servicio local de mapas o con el operador.
+        </p>
+      </article>
+      <article>
+        <h3>En vehículo propio</h3>
+        <p>
+          Llega por Paseo General Escalón o Alameda Roosevelt y anticipa con tiempo el carril
+          necesario. El entorno funciona como nodo vial y se congestiona en horas de mayor movimiento.
+        </p>
+      </article>
+      <article>
+        <h3>A pie</h3>
+        <p>
+          Es viable desde zonas cercanas de Escalón y San Benito, pero el cruce peatonal requiere
+          atención: usa siempre los pasos habilitados y no te detengas en isletas de tráfico.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section paper-grid" aria-labelledby="estacionamiento-title">
+    <div class="section-heading">
+      <p class="section-kicker">Estacionamiento</p>
+      <h2 id="estacionamiento-title">Dónde dejar el auto</h2>
+    </div>
+    <div class="prose">
+      <p class="lede">
+        No conviene asumir que exista un estacionamiento turístico dedicado dentro de la plaza.
+      </p>
+      <p>
+        La alternativa práctica es utilizar estacionamientos privados del entorno de Escalón y San
+        Benito, o bien llegar en transporte por aplicación y evitar por completo la gestión del
+        vehículo. Revisa siempre la señalización vigente, los accesos habilitados y las restricciones
+        temporales por eventos u obras.
+      </p>
+    </div>
+  </section>
+
+  <section id="mapa" class="section" aria-labelledby="direccion-title">
+    <div class="section-heading narrow">
+      <p class="section-kicker">Dirección exacta</p>
+      <h2 id="direccion-title">{ATTRACTION.street}, {ATTRACTION.city}</h2>
+    </div>
+    <div class="address-panel address-panel-wide">
+      <div class="address-main">
+        <span>Dirección oficial</span>
+        <strong>{ATTRACTION.name}</strong>
+        <small>{ATTRACTION.address} · {ATTRACTION.plusCodeLabel}</small>
+      </div>
+      <div class="address-meta">
+        <div><span>Teléfono</span><strong>{ATTRACTION.phone}</strong></div>
+        <div><span>Coordenadas</span><strong>{ATTRACTION.latitude.toFixed(4)}, {ATTRACTION.longitude.toFixed(4)}</strong></div>
+        <div><span>Valoración Google</span><strong>{RATING_DISPLAY}/5 · {REVIEW_DISPLAY} reseñas</strong></div>
+      </div>
+      <a class="button button-dark" href={ATTRACTION.mapsUrl} target="_blank" rel="noopener">
+        Abrir en Google Maps
+      </a>
+    </div>
+    <div class="map-wrap">
+      <iframe
+        title="Mapa del Monumento al Divino Salvador del Mundo en San Salvador"
+        src={ATTRACTION.mapsEmbedSrc}
+        width="600"
+        height="450"
+        style="border:0;"
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
+    </div>
+    <div class="map-note">
+      <p>
+        Para información oficial y actualizaciones turísticas consulta el
+        <a href={ATTRACTION.tourismUrl} target="_blank" rel="noopener noreferrer">Portal Oficial de Turismo de El Salvador</a>
+        y la <a href={ATTRACTION.alcaldiaUrl} target="_blank" rel="noopener noreferrer">Alcaldía Municipal de San Salvador</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section faq-section" aria-labelledby="faq-llegar-title">
+    <div class="section-heading narrow">
+      <p class="section-kicker">Preguntas frecuentes</p>
+      <h2 id="faq-llegar-title">Dudas para llegar al monumento</h2>
+    </div>
+    <div class="faq-list">
+      {
+        TRANSPORT_FAQS.map((item) => (
+          <details>
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section guides-section" aria-labelledby="seguir-title">
+    <div class="section-heading narrow">
+      <p class="section-kicker">Seguir leyendo</p>
+      <h2 id="seguir-title">Otras guías del monumento</h2>
+    </div>
+    <div class="related-grid">
+      {
+        related.map((guide) => (
+          <a class="related-card" href={guide.href}>
+            <h3>{guide.title}</h3>
+            <p>{guide.text}</p>
+            <span>Leer →</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
