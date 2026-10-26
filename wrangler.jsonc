@@ -1,9 +1,12 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "divino-salvador-del-mundo",
+  "name": "divinosalvadordelmundo",
   "compatibility_date": "2026-08-01",
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "404-page"
-  }
+    "not_found_handling": "404-page",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "main": "src/worker.js"
 }

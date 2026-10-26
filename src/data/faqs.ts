@@ -7,15 +7,15 @@ export const HOME_FAQS: Faq[] = [
   },
   {
     q: '¿Se paga entrada para visitar el monumento?',
-    a: 'No. El acceso a la plaza y al exterior del monumento es gratuito: es un espacio público abierto. Eventos o actividades especiales pueden tener su propia organización.',
+    a: 'No hemos confirmado una tarifa actual mediante un aviso de la administración. Consulta las condiciones del espacio y de actividades especiales antes de viajar.',
   },
   {
     q: '¿Cuál es el horario de visita?',
-    a: 'La plaza funciona como espacio público abierto las 24 horas. Durante actos cívicos, religiosos, montajes o cierres viales puede haber accesos temporalmente limitados.',
+    a: 'Google Maps mostraba 24 horas los siete días el 26 de octubre de 2026. Es una instantánea de terceros, no garantía de acceso, seguridad o servicios continuos; comprueba avisos y controles vigentes.',
   },
   {
     q: '¿Cómo llegar al Monumento al Divino Salvador del Mundo?',
-    a: 'En taxi o transporte por aplicación es lo más sencillo: pide “Plaza Salvador del Mundo”. En autobús, varias rutas urbanas circulan por los ejes Roosevelt, Escalón y Manuel Enrique Araujo; conviene confirmar la ruta el mismo día. En auto, anticipa el carril y usa estacionamientos privados del entorno.',
+    a: 'Localiza la plaza en el mapa y elige transporte según tu origen. Si contratas un vehículo, acuerda un descenso legal; si usas autobús, confirma ruta y parada actuales con el operador.',
   },
   {
     q: '¿Cuánto tiempo conviene reservar para la visita?',
@@ -23,15 +23,15 @@ export const HOME_FAQS: Faq[] = [
   },
   {
     q: '¿Cuál es el mejor momento para visitarlo?',
-    a: 'La primera hora de la mañana y el final de la tarde ofrecen luz más suave y menos calor. Al anochecer, la iluminación urbana cambia por completo la lectura del monumento.',
+    a: 'La primera hora de la mañana y el final de la tarde pueden ofrecer luz más suave. Para una visita al anochecer, confirma el acceso y la iluminación actuales; no se garantiza que estén disponibles.',
   },
   {
     q: '¿Hay estacionamiento en la plaza?',
-    a: 'No conviene asumir que exista un estacionamiento turístico dedicado dentro del monumento. La opción práctica es usar estacionamientos privados cercanos o llegar en transporte por aplicación, respetando la señalización vigente.',
+    a: 'No se ha confirmado estacionamiento dedicado ni disponibilidad de plazas privadas. Verifica un lugar legal para aparcar o descender antes de salir.',
   },
   {
     q: '¿Se puede visitar de noche?',
-    a: 'Sí, la plaza es un espacio público abierto y de noche la iluminación realza la esfera y el pedestal. Evita detenerte en calzadas o isletas de tráfico y usa los pasos peatonales habilitados.',
+    a: 'La lista de Maps indica 24 horas, pero debes confirmar acceso e iluminación actuales. No confundas la foto nocturna de agosto de 2013 con una garantía de las condiciones de hoy.',
   },
   {
     q: '¿Por qué el Divino Salvador del Mundo es un símbolo de El Salvador?',
@@ -39,15 +39,15 @@ export const HOME_FAQS: Faq[] = [
   },
   {
     q: '¿Qué ver cerca del Monumento al Divino Salvador del Mundo?',
-    a: 'Por su posición central se combina bien con el Parque Cuscatlán, el Museo de Arte de El Salvador (MARTE) y, en un traslado corto, con el Centro Histórico de San Salvador.',
+    a: 'Puedes estudiar por separado Parque Cuscatlán, MARTE o el Centro Histórico. Verifica accesos, horarios y desplazamientos; son propuestas de planificación, no una ruta con tiempo garantizado.',
   },
   {
     q: '¿Dónde se toman las mejores fotos del monumento?',
-    a: 'La explanada frontal da una composición simétrica; los laterales bajos enfatizan la verticalidad; el borde de la plaza permite incluir la ciudad o el volcán al fondo; y la noche ofrece la versión iluminada.',
+    a: 'Desde un punto permitido, prueba un encuadre frontal o lateral para mostrar la verticalidad del conjunto. Evalúa el fondo urbano desde una zona segura. Una toma nocturna depende del acceso y de la iluminación disponibles.',
   },
   {
     q: '¿Es un sitio apto para visitar en familia?',
-    a: 'Sí, es una visita corta y llana, pero está rodeada de vías de tráfico intenso. Conviene cruzar solo por pasos peatonales habilitados y vigilar a los niños en los bordes de la plaza.',
+    a: 'Evalúa los cruces, escalones y condiciones actuales según las necesidades de tu familia. No se garantiza un recorrido llano o accesible; acompaña a menores y usa los pasos habilitados.',
   },
 ];
 
@@ -81,11 +81,11 @@ export const HISTORIA_FAQS: Faq[] = [
 export const TRANSPORT_FAQS: Faq[] = [
   {
     q: '¿Cuál es la dirección exacta del monumento?',
-    a: 'Paseo General Escalón y Alameda Franklin Delano Roosevelt, San Salvador, El Salvador. Plus Code PQ2G+G6; coordenadas aproximadas 13.7013, -89.2270.',
+    a: 'Paseo General Escalón y Alameda Franklin Delano Roosevelt, San Salvador, El Salvador. Plus Code PQ2G+G6; coordenadas aproximadas 13.7013, -89.2244.',
   },
   {
     q: '¿Cómo llegar en autobús al Monumento al Divino Salvador del Mundo?',
-    a: 'Varias rutas urbanas circulan por los ejes Alameda Franklin Delano Roosevelt, Paseo General Escalón y Manuel Enrique Araujo. Como los recorridos cambian, confirma la ruta y el sentido el mismo día con un servicio local de mapas o con el operador.',
+    a: 'Consulta al operador una ruta y parada vigentes para tu origen. No confirmamos números de autobús, frecuencias ni paradas activas.',
   },
   {
     q: '¿Conviene llegar en taxi o transporte por aplicación?',
@@ -93,22 +93,22 @@ export const TRANSPORT_FAQS: Faq[] = [
   },
   {
     q: '¿Hay estacionamiento junto a la plaza?',
-    a: 'No hay un estacionamiento turístico dedicado dentro del monumento. Lo habitual es usar estacionamientos privados del entorno de Escalón y San Benito y respetar la señalización vigente.',
+    a: 'No hemos confirmado estacionamiento dedicado ni disponibilidad de plazas privadas. Verifica un estacionamiento o punto de descenso legal y el trayecto peatonal.',
   },
   {
     q: '¿Se puede llegar caminando?',
-    a: 'Sí, siempre que uses los pasos peatonales habilitados. La plaza está rodeada por vías de tráfico intenso; no cruces por fuera de los pasos ni te detengas en isletas de tráfico.',
+    a: 'Depende del origen y de los cruces habilitados. Comprueba el recorrido y las condiciones del día; usa los pasos autorizados y no te detengas en calzadas o isletas de tráfico. No se garantiza una ruta continua o accesible.',
   },
   {
     q: '¿A qué distancia queda del Centro Histórico de San Salvador?',
-    a: 'El monumento está en la zona oeste de la capital y el Centro Histórico queda a un traslado corto en vehículo. El tiempo real depende del tráfico, sobre todo en horas punta.',
+    a: 'Consulta la distancia y el recorrido desde la plaza hasta tu destino concreto en el Centro Histórico. No ofrecemos un tiempo fijo: tráfico, cierres y punto de llegada pueden modificarlo.',
   },
 ];
 
 export const PHOTO_FAQS: Faq[] = [
   {
     q: '¿Se puede fotografiar el Monumento al Divino Salvador del Mundo?',
-    a: 'Sí. Es un espacio público abierto y la fotografía de recuerdo es habitual. Evita bloquear pasos peatonales, no te detengas en calzadas o isletas de tráfico y respeta la señalización y los cierres temporales por eventos.',
+    a: 'Consulta la señalización y las instrucciones vigentes antes de fotografiar. Evita bloquear pasos peatonales, no te detengas en calzadas o isletas de tráfico y respeta la señalización y los cierres temporales por eventos.',
   },
   {
     q: '¿Cuál es el mejor lugar para tomar la foto del monumento?',

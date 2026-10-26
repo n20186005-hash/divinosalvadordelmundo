@@ -126,13 +126,13 @@ const isCurrent = (href: string) =>
         <button type="button" data-open-dialog="cookies">Cookies</button>
       </nav>
       <p class="disclaimer">
-        Guía de visita independiente; no es el sitio oficial de la Alcaldía de San Salvador, del
+        Guía independiente y sin fines de lucro de turismo y educación; no es el sitio oficial de la Alcaldía de San Salvador, del
         Ministerio de Cultura ni de la administración de la plaza.
       </p>
       <p class="photo-credit">
-        Todas las fotografías mostradas en este sitio web pertenecen a sus autores originales; su
-        copyright se reserva a los fotógrafos.
+        Fotografías históricas de 2010–2013: autores y archivos individuales en <a href="/PHOTO-SOURCES.md">fuentes por imagen</a>. <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>. Copias web redimensionadas/comprimidas y recortadas para mostrar; adaptaciones bajo la misma licencia. No documentan el acceso actual.
       </p>
+      <p class="disclaimer">Verificado el 26 de octubre de 2026. Valoraciones y horario de Google Maps son una instantánea de un tercero, no reseñas propias ni garantía de acceso. Teléfono de la lista, no atención oficial de este sitio.</p>
     </footer>
 
     <div class="cookie-banner" data-cookie-banner hidden>
@@ -162,7 +162,7 @@ const isCurrent = (href: string) =>
         </p>
         <p>
           La preferencia de cookies se guarda localmente en tu navegador. Puedes cambiarla desde
-          “Cookies” en el pie de página.
+          “Cookies” en el pie de página. Rechazar detiene GA en esta página, pero no recupera datos ya enviados. El beacon de rendimiento del alojamiento Cloudflare es independiente de esta elección GA: <a href="https://developers.cloudflare.com/web-analytics/data-metrics/data-origin-and-collection/">origen y recopilación</a>. La presencia de un script no prueba un envío de datos.
         </p>
       </div>
     </dialog>
@@ -197,6 +197,7 @@ const isCurrent = (href: string) =>
           <div><strong>Analítica</strong><p>Google Analytics 4 (G-HXM22WWPKP), solo con consentimiento.</p></div>
           <label class="switch"><input type="checkbox" data-analytics-toggle /><span></span></label>
         </div>
+        <p data-consent-status role="status" aria-live="polite"></p>
         <button class="button button-primary" type="button" data-save-preferences>Guardar preferencias</button>
       </div>
     </dialog>
@@ -204,46 +205,49 @@ const isCurrent = (href: string) =>
     <script is:inline>
       (() => {
         const GA_ID = 'G-HXM22WWPKP';
-        const COOKIE_KEY = 'salvador-mundo-analytics-consent';
-        let analyticsLoaded = false;
-
-        const loadAnalytics = () => {
-          if (analyticsLoaded || document.querySelector('script[data-ga4]')) return;
-          analyticsLoaded = true;
-          const script = document.createElement('script');
-          script.async = true;
-          script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-          script.dataset.ga4 = 'true';
-          document.head.appendChild(script);
-          window.dataLayer = window.dataLayer || [];
-          window.gtag = function () { window.dataLayer.push(arguments); };
-          window.gtag('js', new Date());
-          window.gtag('config', GA_ID, { anonymize_ip: true });
-        };
-
-        const setConsent = (allowed) => {
-          localStorage.setItem(COOKIE_KEY, allowed ? 'granted' : 'denied');
-          const toggle = document.querySelector('[data-analytics-toggle]');
-          if (toggle) toggle.checked = allowed;
-          const banner = document.querySelector('[data-cookie-banner]');
-          if (banner) banner.hidden = true;
-          if (allowed) loadAnalytics();
-        };
-
-        const stored = localStorage.getItem(COOKIE_KEY);
+        const COOKIE_KEY = 'salvador-mundo-analytics-consent', VETO_KEY = COOKIE_KEY + '-off';
         const banner = document.querySelector('[data-cookie-banner]');
-        if (!stored && banner) banner.hidden = false;
-        if (stored === 'granted') loadAnalytics();
-
-        document.querySelector('[data-cookie-accept]')?.addEventListener('click', () => setConsent(true));
-        document.querySelector('[data-cookie-reject]')?.addEventListener('click', () => setConsent(false));
-
         const analyticsToggle = document.querySelector('[data-analytics-toggle]');
-        if (analyticsToggle) analyticsToggle.checked = stored === 'granted';
-        document.querySelector('[data-save-preferences]')?.addEventListener('click', () => {
-          setConsent(Boolean(analyticsToggle?.checked));
-          document.querySelector('#cookies')?.close();
-        });
+        const status = document.querySelector('[data-consent-status]');
+        let denied = false, analyticsLoaded = false;
+        const read = () => { try { return localStorage.getItem(COOKIE_KEY); } catch { return null; } };
+        const veto = () => { try { return sessionStorage.getItem(VETO_KEY) !== null; } catch { return true; } };
+        const off = () => { denied = true; window['ga-disable-' + GA_ID] = true; window.gtag?.('consent', 'update', {analytics_storage:'denied'}); if (analyticsToggle) analyticsToggle.checked = false; };
+        const on = () => {
+          denied = false; window['ga-disable-' + GA_ID] = false; if(analyticsToggle)analyticsToggle.checked=true;
+          if (analyticsLoaded) { window.gtag?.('consent','update',{analytics_storage:'granted'}); return; }
+          analyticsLoaded = true; window.dataLayer ||= [];
+          window.gtag = function () { window.dataLayer.push(arguments); };
+          window.gtag('consent','default',{analytics_storage:'granted'});
+          window.gtag('js',new Date()); window.gtag('config',GA_ID,{anonymize_ip:true});
+          const script = document.createElement('script'); script.async = true; script.dataset.ga4 = 'true';
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID; document.head.appendChild(script);
+          if (analyticsToggle) analyticsToggle.checked = true;
+        };
+        const clearPermission = () => {
+          try { localStorage.setItem(COOKIE_KEY,'denied'); if(localStorage.getItem(COOKIE_KEY)==='denied')return true; } catch {}
+          try { localStorage.removeItem(COOKIE_KEY); return localStorage.getItem(COOKIE_KEY)===null; } catch { return false; }
+        };
+        const setConsent = (allow) => {
+          off(); let saved=false, sharedOff=false, tabOff=false;
+          try { sessionStorage.setItem(VETO_KEY,'1'); tabOff=sessionStorage.getItem(VETO_KEY)==='1'; } catch {}
+          if(allow) {
+            try { sessionStorage.removeItem(VETO_KEY); if(sessionStorage.getItem(VETO_KEY)!==null)throw Error('veto');
+              localStorage.setItem(COOKIE_KEY,'granted'); if(localStorage.getItem(COOKIE_KEY)!=='granted')throw Error('readback'); saved=true; on();
+            } catch { sharedOff=clearPermission(); try{sessionStorage.setItem(VETO_KEY,'1');tabOff=sessionStorage.getItem(VETO_KEY)==='1';}catch{} }
+          } else { try{localStorage.setItem(COOKIE_KEY,'denied');saved=localStorage.getItem(COOKIE_KEY)==='denied';}catch{} sharedOff=saved||clearPermission(); }
+          const message=saved?'Preferencia guardada.':('No se pudo verificar el guardado. GA está desactivado en esta página. '+(sharedOff?'El permiso almacenado fue retirado.':'Un permiso anterior puede seguir en otras pestañas o visitas.')+(tabOff?' Rechazo conservado en esta pestaña.':''));
+          if(status)status.textContent=message;
+          if(banner)banner.hidden=saved;
+          if(!saved)document.querySelector('#cookies')?.showModal?.();
+          return saved;
+        };
+        window['ga-disable-' + GA_ID]=true;
+        if(read()==='granted'&&!veto())on();else {off();if(!read()&&banner)banner.hidden=false;}
+        document.querySelector('[data-cookie-accept]')?.addEventListener('click',()=>setConsent(true));
+        document.querySelector('[data-cookie-reject]')?.addEventListener('click',()=>setConsent(false));
+        document.querySelector('[data-save-preferences]')?.addEventListener('click',()=>{if(setConsent(Boolean(analyticsToggle?.checked)))document.querySelector('#cookies')?.close();});
+        window.addEventListener('storage',(event)=>{if((event.key===COOKIE_KEY||event.key===null)&&read()!=='granted'){off();try{sessionStorage.setItem(VETO_KEY,'1');}catch{}}else if(!denied&&!veto()&&read()==='granted')on();});
 
         document.querySelectorAll('[data-open-dialog]').forEach((button) => {
           button.addEventListener('click', () => {

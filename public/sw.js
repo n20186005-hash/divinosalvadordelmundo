@@ -1,5 +1,5 @@
-/* Monumento al Divino Salvador del Mundo — Service Worker v2026-09-29 */
-const CACHE = 'salvador-mundo-v2026-09-29';
+/* Monumento al Divino Salvador del Mundo — Service Worker v2026-10-26 */
+const CACHE = 'salvador-mundo-v2026-10-26';
 const OFFLINE_URL = '/';
 
 self.addEventListener('install', (event) => {
@@ -32,10 +32,10 @@ self.addEventListener('fetch', (event) => {
       fetch(request)
         .then((response) => {
           const copy = response.clone();
-          caches.open(CACHE).then((cache) => cache.put(request, copy));
+          if (response.ok) caches.open(CACHE).then((cache) => cache.put(request, copy));
           return response;
         })
-        .catch(() => caches.match(request).then((hit) => hit || caches.match(OFFLINE_URL)))
+        .catch(() => caches.match(request).then((hit) => hit || new Response('Sin conexión: esta página no está guardada.', {status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}})))
     );
     return;
   }
@@ -46,7 +46,7 @@ self.addEventListener('fetch', (event) => {
       return fetch(request).then((response) => {
         if (response && response.status === 200 && response.type === 'basic') {
           const copy = response.clone();
-          caches.open(CACHE).then((cache) => cache.put(request, copy));
+          if (response.ok) caches.open(CACHE).then((cache) => cache.put(request, copy));
         }
         return response;
       });

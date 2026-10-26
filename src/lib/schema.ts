@@ -47,11 +47,8 @@ export function buildAttractionSchema(site: URL | undefined): Schema {
       ATTRACTION.shortName,
       `${ATTRACTION.name} (${ATTRACTION.city})`,
     ],
-    description: `El ${ATTRACTION.name} es el conjunto escultórico de 1942 que preside la ${ATTRACTION.commonName} en ${ATTRACTION.city}: una figura de Cristo en mármol de Carrara sobre un globo terráqueo y un pedestal de concreto. Plaza pública abierta las 24 horas y acceso gratuito.`,
-    telephone: ATTRACTION.phoneE164,
+    description: `${ATTRACTION.name}, conjunto escultórico de la Plaza Salvador del Mundo en San Salvador, El Salvador. Guía independiente de historia, acceso y fotografía.`,
     ...(image ? { image: [image] } : {}),
-    isAccessibleForFree: true,
-    publicAccess: true,
     touristType: 'Monumento histórico, hito cívico-religioso y atracción turística',
     address: {
       '@type': 'PostalAddress',
@@ -66,21 +63,7 @@ export function buildAttractionSchema(site: URL | undefined): Schema {
       longitude: ATTRACTION.longitude,
     },
     hasMap: ATTRACTION.mapsUrl,
-    sameAs: [ATTRACTION.mapsUrl, ATTRACTION.tourismUrl, ATTRACTION.culturaUrl, ATTRACTION.alcaldiaUrl],
-    openingHoursSpecification: [
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-        opens: '00:00',
-        closes: '23:59',
-      },
-    ],
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: ATTRACTION.rating,
-      reviewCount: ATTRACTION.reviewCount,
-      bestRating: 5,
-    },
+    sameAs: [ATTRACTION.mapsUrl],
   };
 }
 

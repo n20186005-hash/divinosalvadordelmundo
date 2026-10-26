@@ -20,16 +20,16 @@ Monumento histórico / hito cívico-religioso / atracción turística
 Monumento al Divino Salvador del Mundo | Guía de visita en San Salvador
 
 【开放时间】
-Plaza pública abierta las 24 horas. El acceso puede cambiar temporalmente durante actos cívicos, religiosos, montajes o cierres viales.
+Google Maps: 24 horas los siete días, lista comprobada el 26 de octubre de 2026; no garantiza acceso ni servicios continuos.
 
 【门票价格】
-Acceso gratuito a la plaza y al exterior del monumento.
+No se ha confirmado una tarifa actual mediante un aviso de la administración.
 
 【地址】
 Paseo General Escalón y Alameda Franklin Delano Roosevelt, San Salvador, El Salvador. Plus Code: PQ2G+G6.
 
 【交通方式】
-La forma más sencilla para visitantes es taxi o transporte por aplicación. Varias rutas de autobús circulan por los ejes Roosevelt, Escalón y Manuel Enrique Araujo; conviene confirmar la ruta el mismo día. La plaza está rodeada por vías de tráfico intenso, por lo que el cruce peatonal requiere atención y uso de pasos habilitados.
+Confirmar ruta, parada, estacionamiento o descenso legal según el origen y los avisos vigentes; no se confirman servicios de transporte específicos.
 
 【历史地位】
 Es uno de los símbolos visuales más reconocibles de El Salvador. La Plaza Salvador del Mundo fue declarada Bien Cultural en 2012 por la autoridad cultural salvadoreña.

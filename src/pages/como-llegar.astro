@@ -6,7 +6,7 @@ import { buildBreadcrumbSchema, buildFaqSchema, buildWebPageSchema } from '../li
 
 const pageTitle = 'Cómo llegar al Monumento al Divino Salvador del Mundo';
 const pageDescription =
-  'Cómo llegar al Monumento al Divino Salvador del Mundo en San Salvador: dirección, Plus Code PQ2G+G6, rutas de autobús por Roosevelt y Escalón, taxi, auto, estacionamiento y mapa.';
+  'Cómo llegar al Monumento al Divino Salvador del Mundo en San Salvador: dirección, Plus Code PQ2G+G6, mapa con punto de la lista, transporte a verificar, estacionamiento y precauciones de acceso.';
 
 const site = Astro.site;
 const path = '/como-llegar/';
@@ -39,10 +39,7 @@ const related = GUIDES.filter((guide) => guide.href !== path);
     <div class="section-heading narrow">
       <p class="section-kicker">Opciones de acceso</p>
       <h2 id="opciones-title">Taxi, autobús, vehículo propio o a pie</h2>
-      <p>
-        No existe un acceso vehicular propio dentro de la plaza: el monumento está rodeado por vías de
-        tráfico intenso. Elige el modo según tu punto de partida y confirma rutas el mismo día.
-      </p>
+      <p>Antes de elegir transporte, localiza la plaza y acuerda un punto permitido para descender. No se han verificado accesos vehiculares ni estacionamientos dedicados; confirma las condiciones vigentes.</p>
     </div>
     <div class="transport-grid">
       <article>
@@ -54,11 +51,7 @@ const related = GUIDES.filter((guide) => guide.href !== path);
       </article>
       <article>
         <h3>Autobús urbano</h3>
-        <p>
-          Varias rutas circulan por los ejes Alameda Franklin Delano Roosevelt, Paseo General Escalón y
-          Manuel Enrique Araujo. Como los recorridos pueden variar, confirma la ruta y el sentido el
-          mismo día con un servicio local de mapas o con el operador.
-        </p>
+        <p>Consulta al operador una ruta y parada vigentes desde tu origen. Este sitio no confirma números de autobús, frecuencias ni paradas activas.</p>
       </article>
       <article>
         <h3>En vehículo propio</h3>
@@ -69,10 +62,7 @@ const related = GUIDES.filter((guide) => guide.href !== path);
       </article>
       <article>
         <h3>A pie</h3>
-        <p>
-          Es viable desde zonas cercanas de Escalón y San Benito, pero el cruce peatonal requiere
-          atención: usa siempre los pasos habilitados y no te detengas en isletas de tráfico.
-        </p>
+        <p>Evalúa el recorrido peatonal desde tu origen, los cruces habilitados y las condiciones del lugar. No se garantiza una ruta accesible o continua desde un barrio determinado.</p>
       </article>
     </div>
   </section>
@@ -86,12 +76,7 @@ const related = GUIDES.filter((guide) => guide.href !== path);
       <p class="lede">
         No conviene asumir que exista un estacionamiento turístico dedicado dentro de la plaza.
       </p>
-      <p>
-        La alternativa práctica es utilizar estacionamientos privados del entorno de Escalón y San
-        Benito, o bien llegar en transporte por aplicación y evitar por completo la gestión del
-        vehículo. Revisa siempre la señalización vigente, los accesos habilitados y las restricciones
-        temporales por eventos u obras.
-      </p>
+      <p>No se ha confirmado una oferta actual de estacionamientos. Si viajas en vehículo, verifica un lugar legal para aparcar, su disponibilidad y el trayecto peatonal; si contratas transporte, acuerda el descenso sin ocupar carriles de circulación.</p>
     </div>
   </section>
 
@@ -102,12 +87,12 @@ const related = GUIDES.filter((guide) => guide.href !== path);
     </div>
     <div class="address-panel address-panel-wide">
       <div class="address-main">
-        <span>Dirección oficial</span>
+        <span>Ubicación de la lista</span>
         <strong>{ATTRACTION.name}</strong>
         <small>{ATTRACTION.address} · {ATTRACTION.plusCodeLabel}</small>
       </div>
       <div class="address-meta">
-        <div><span>Teléfono</span><strong>{ATTRACTION.phone}</strong></div>
+        <div><span>Teléfono en Maps</span><strong>{ATTRACTION.phone}</strong></div>
         <div><span>Coordenadas</span><strong>{ATTRACTION.latitude.toFixed(4)}, {ATTRACTION.longitude.toFixed(4)}</strong></div>
         <div><span>Valoración Google</span><strong>{RATING_DISPLAY}/5 · {REVIEW_DISPLAY} reseñas</strong></div>
       </div>

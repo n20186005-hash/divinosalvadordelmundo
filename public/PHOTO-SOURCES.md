@@ -13,3 +13,5 @@
 
 4. `monumento-fiestas-noche.jpg` — Alex Bonilla — CC BY-SA 3.0 · 1280×853
    Página: https://commons.wikimedia.org/wiki/File:Monumento_al_Divino_Salvador_del_Mundo_en_El_Salvador.jpg
+
+Fuentes verificadas el 26 de octubre de 2026. Fotografías históricas: frontal 2011, plaza 2013, detalle 2010 según metadatos y noche 5 de agosto de 2013. No representan necesariamente el estado o acceso actual. Copias web redimensionadas y comprimidas; el diseño puede recortarlas. Adaptaciones bajo CC BY-SA 3.0: https://creativecommons.org/licenses/by-sa/3.0/ .

@@ -63,7 +63,6 @@ El dominio canónico es `https://divinosalvadordelmundo.com` (HTTPS, sin `www`).
    - *SSL/TLS → Edge Certificates → Always Use HTTPS*.
    - *Rules → Redirect Rules*: `http://*` y hostname `www.divinosalvadordelmundo.com` → `https://divinosalvadordelmundo.com` (301).
 
-Sin la regla del panel, Google seguirá registrando las tres variantes por separado (se detectaron `https://`, `https://www.` y `http://` en Search Console).
 
 ### Cabeceras de seguridad
 
@@ -79,3 +78,4 @@ El diseño usa fotografías reales verificadas en Wikimedia Commons y muestra cr
 - Ministerio de Educación / Universidad de El Salvador — descripción e historia del monumento.
 - Google Maps / datos facilitados por el solicitante — dirección, teléfono, valoración y horario público.
 - Wikimedia Commons — fotografías y licencias.
+El Worker fuente `src/worker.js` se ejecuta antes de los assets: normaliza HTTP y www al dominio canónico HTTPS y conserva la respuesta de error real. La configuración corresponde al proyecto divinosalvadordelmundo. La validación local no sustituye la comprobación de producción.

@@ -15,9 +15,9 @@ import {
   buildWebPageSchema,
 } from '../lib/schema';
 
-const pageTitle = 'Monumento al Divino Salvador del Mundo: historia, cómo llegar y fotos';
+const pageTitle = 'Salvador del Mundo, San Salvador: monumento, historia y visita';
 const pageDescription =
-  'El Monumento al Divino Salvador del Mundo en San Salvador: historia, cómo llegar en bus o taxi, horario 24 h, acceso gratuito, fotos, mapa y lugares cercanos.';
+  'Ubica la Plaza Salvador del Mundo en San Salvador: historia del monumento, mapa, horario atribuido, llegada, fotos históricas y consejos para preparar la visita.';
 
 const site = Astro.site;
 const schema = [
@@ -54,10 +54,7 @@ const highlights = [PHOTOS.plaza, PHOTOS.vertical];
       <h1 id="hero-title">
         Monumento al Divino Salvador del Mundo<span class="hero-loc">San Salvador · El Salvador</span>
       </h1>
-      <p class="hero-lead">
-        Cristo sobre el mundo. Una imagen monumental que resume fe, memoria urbana e identidad
-        salvadoreña en el corazón de la capital.
-      </p>
+      <p class="hero-lead">El conjunto escultórico de la Plaza Salvador del Mundo es una referencia de San Salvador. Distingue el monumento de la plaza que lo rodea y prepara aquí tu llegada, la lectura histórica y las fotografías.</p>
       <div class="hero-actions">
         <a class="button button-primary" href="#visita">Planear la visita</a>
         <a class="button button-ghost" href="/historia/">Conocer su historia</a>
@@ -72,8 +69,8 @@ const highlights = [PHOTOS.plaza, PHOTOS.vertical];
   </section>
 
   <section class="fact-band" aria-label="Información esencial">
-    <div><span>Horario</span><strong>Abierto 24 horas</strong></div>
-    <div><span>Entrada</span><strong>Acceso gratuito</strong></div>
+    <div><span>Horario</span><strong>Maps: 24 h¹</strong></div>
+    <div><span>Entrada</span><strong>Verificar condiciones</strong></div>
     <div><span>Tiempo sugerido</span><strong>30–60 min</strong></div>
     <div><span>Valoración</span><strong>{RATING_DISPLAY}/5 · {REVIEW_DISPLAY} reseñas</strong></div>
   </section>
@@ -92,10 +89,10 @@ const highlights = [PHOTOS.plaza, PHOTOS.vertical];
           tradición religiosa y la identidad salvadoreña.
         </p>
         <p>
-          La escultura de 1942 se eleva en una de las intersecciones más visibles de la ciudad: el
+          La escultura instalada en 1942 se eleva en una de las intersecciones más visibles de la ciudad: el
           cruce del <strong>Paseo General Escalón</strong> con la
           <strong>Alameda Franklin Delano Roosevelt</strong>, en plena Plaza Salvador del Mundo.
-          Es una plaza pública abierta las 24 horas y de acceso gratuito.
+          Google Maps mostraba 24 horas todos los días al comprobarlo el 26 de octubre de 2026. Es una referencia de un tercero: no garantiza acceso sin restricciones ni sustituye avisos locales. No hemos confirmado una tarifa actual de un operador.
         </p>
         <ul class="geo-chain" aria-label="Jerarquía geográfica del monumento">
           <li>{ATTRACTION.name}</li>
@@ -103,22 +100,18 @@ const highlights = [PHOTOS.plaza, PHOTOS.vertical];
           <li>{ATTRACTION.region}</li>
           <li>{ATTRACTION.country}</li>
         </ul>
-        <p>
-          Por su posición central, la visita se combina fácilmente con el
-          <strong>Parque Cuscatlán</strong> y el <strong>Museo de Arte de El Salvador (MARTE)</strong>,
-          o continúa en un traslado corto hacia el <strong>Centro Histórico de San Salvador</strong>.
-        </p>
+        <p>Puedes considerar otras visitas en San Salvador por separado. Comprueba los accesos, horarios y desplazamientos del Parque Cuscatlán, MARTE o el Centro Histórico antes de combinarlos; no se garantiza un trayecto corto.</p>
       </div>
       <aside class="nap-card" aria-label="Datos del monumento">
         <dl>
           <div><dt>Nombre</dt><dd>{ATTRACTION.name}</dd></div>
           <div><dt>Dirección</dt><dd>{ATTRACTION.address}</dd></div>
           <div>
-            <dt>Teléfono</dt>
+            <dt>Teléfono de Maps</dt>
             <dd><a href={`tel:${ATTRACTION.phoneE164}`}>{ATTRACTION.phone}</a></dd>
           </div>
           <div><dt>Plus Code</dt><dd>{ATTRACTION.plusCode}</dd></div>
-          <div><dt>Horario</dt><dd>Plaza abierta 24 h · acceso gratuito</dd></div>
+          <div><dt>Horario</dt><dd>Maps: 24 h · 26 oct 2026</dd></div>
           <div><dt>Valoración Google</dt><dd>{RATING_DISPLAY}/5 · {REVIEW_DISPLAY} reseñas</dd></div>
         </dl>
         <a class="button button-primary" href={ATTRACTION.mapsUrl} target="_blank" rel="noopener">
@@ -197,12 +190,12 @@ const highlights = [PHOTOS.plaza, PHOTOS.vertical];
       <article><span>01</span><h3>Llegada y vista general</h3><p>Detente en un punto seguro del perímetro para leer el conjunto completo y su relación con las grandes avenidas.</p></article>
       <article><span>02</span><h3>Eje frontal</h3><p>Acércate por los senderos de la plaza. El pedestal gana escala y la esfera se vuelve el centro de la composición.</p></article>
       <article><span>03</span><h3>Giro lateral</h3><p>Rodea el monumento para buscar el perfil de Cristo y separar la silueta del fondo urbano.</p></article>
-      <article><span>04</span><h3>Luz de cierre</h3><p>Si visitas al final de la tarde, reserva unos minutos para el cambio de luz y la iluminación nocturna.</p></article>
+      <article><span>04</span><h3>Luz de cierre</h3><p>Si el acceso está permitido, observa el cambio de luz. No se garantiza que la iluminación nocturna esté encendida.</p></article>
     </div>
 
     <div class="visit-cards">
-      <article class="info-card"><p class="card-label">Horario</p><h3>24 horas</h3><p>La plaza funciona como espacio público abierto. En eventos, pueden existir cierres parciales o controles temporales.</p></article>
-      <article class="info-card"><p class="card-label">Entrada / costos</p><h3>Gratuito</h3><p>La visita al monumento no requiere una tarifa turística regular. Presupuesta solamente transporte, estacionamiento o consumos cercanos.</p></article>
+      <article class="info-card"><p class="card-label">Horario</p><h3>Maps: 24 horas</h3><p>¹ Lista Google Maps verificada el 26 de octubre de 2026: 24 horas los siete días. Los montajes, actos y controles pueden cambiar el acceso. La lista no garantiza seguridad, iluminación ni disponibilidad continua de servicios.</p></article>
+      <article class="info-card"><p class="card-label">Entrada / costos</p><h3>Consultar condiciones</h3><p>No se ha confirmado una tarifa vigente mediante un aviso de la administración. Verifica las condiciones del espacio y de cualquier actividad organizada; transporte o estacionamiento son gastos independientes.</p></article>
       <article class="info-card"><p class="card-label">Mejor momento</p><h3>Mañana o atardecer</h3><p>Menos calor, luz más lateral y mejores contrastes en el pedestal blanco y la esfera azul.</p></article>
       <article class="info-card"><p class="card-label">Estancia sugerida</p><h3>30–60 minutos</h3><p>Suficiente para caminar, fotografiar y entender el monumento; amplía el tiempo si combinas la visita con el entorno.</p></article>
     </div>
@@ -261,7 +254,7 @@ const highlights = [PHOTOS.plaza, PHOTOS.vertical];
       </article>
       <article>
         <h3>Autobús</h3>
-        <p>Varias rutas urbanas pasan por los corredores Roosevelt, Escalón y Manuel Enrique Araujo. Como los recorridos pueden cambiar, confirma la ruta y el sentido el mismo día.</p>
+        <p>Si eliges autobús, consulta al operador una ruta y parada vigentes para tu punto de partida. Este sitio no confirma números de ruta, frecuencias ni paradas activas.</p>
       </article>
       <article>
         <h3>En vehículo</h3>
@@ -269,18 +262,18 @@ const highlights = [PHOTOS.plaza, PHOTOS.vertical];
       </article>
       <article>
         <h3>Estacionamiento</h3>
-        <p>No cuentes con un estacionamiento turístico dedicado dentro de la plaza. Prefiere estacionamientos privados del entorno y respeta señalización, accesos y restricciones vigentes.</p>
+        <p>No hemos confirmado estacionamiento dedicado ni disponibilidad de plazas privadas. Verifica un lugar legal para aparcar o descender y el acceso peatonal antes de salir.</p>
       </article>
     </div>
     <div class="address-panel">
       <div class="address-main">
-        <span>Dirección oficial</span>
+        <span>Ubicación de la lista</span>
         <strong>{ATTRACTION.name} — {ATTRACTION.street}</strong>
         <small>{ATTRACTION.city}, {ATTRACTION.country} · Plus Code {ATTRACTION.plusCode}</small>
       </div>
       <div class="address-meta">
-        <div><span>Teléfono</span><strong>{ATTRACTION.phone}</strong></div>
-        <div><span>Horario</span><strong>24 h · acceso gratuito</strong></div>
+        <div><span>Teléfono de Maps</span><strong>{ATTRACTION.phone}</strong></div>
+        <div><span>Horario</span><strong>Maps: 24 h · 26 oct 2026</strong></div>
         <div><span>Valoración Google</span><strong>{RATING_DISPLAY}/5 · {REVIEW_DISPLAY} reseñas</strong></div>
       </div>
       <a class="button button-dark" href={ATTRACTION.mapsUrl} target="_blank" rel="noopener">
@@ -322,14 +315,14 @@ const highlights = [PHOTOS.plaza, PHOTOS.vertical];
         <h3>Qué comer cerca</h3>
         <div class="around-list">
           <article><span>01</span><div><h4>Cocina salvadoreña</h4><p>Busca pupusas, yuca, panes con pollo y desayunos típicos en la zona de Escalón y corredores cercanos.</p></div></article>
-          <article><span>02</span><div><h4>Café y sobremesa</h4><p>San Salvador tiene una fuerte cultura de café; la zona occidental de la capital reúne cafeterías y opciones para una pausa antes o después de la plaza.</p></div></article>
-          <article><span>03</span><div><h4>Opciones internacionales</h4><p>Alrededor de Escalón y San Benito encontrarás restaurantes casuales y de mesa de distintas cocinas, útiles para combinar con una visita corta.</p></div></article>
+          <article><span>02</span><div><h4>Café y sobremesa</h4><p>Una pausa para café puede formar parte de tu plan. Comprueba un local concreto, su dirección, menú y horario; este sitio no mantiene una lista de establecimientos verificados.</p></div></article>
+          <article><span>03</span><div><h4>Opciones internacionales</h4><p>Si buscas otros tipos de cocina, compara locales de acuerdo con tu itinerario y tus necesidades alimentarias. No se garantiza una oferta concreta junto a la plaza.</p></div></article>
         </div>
       </div>
       <div>
         <h3>Qué ver después</h3>
         <div class="around-list">
-          <article><span>01</span><div><h4>Parque Cuscatlán</h4><p>Gran espacio verde urbano sobre la Alameda Roosevelt, adecuado para continuar a pie o en un traslado corto.</p></div></article>
+          <article><span>01</span><div><h4>Parque Cuscatlán</h4><p>Un candidato para otra visita en la ciudad. Verifica la ubicación, el acceso y el desplazamiento según tu punto de partida.</p></div></article>
           <article><span>02</span><div><h4>Museo de Arte de El Salvador</h4><p>Una buena continuación para entender el arte salvadoreño moderno y contemporáneo en la zona de San Benito.</p></div></article>
           <article><span>03</span><div><h4>Centro Histórico de San Salvador</h4><p>Plazas, arquitectura cívica y templos permiten ampliar la lectura histórica de la capital en una segunda parada.</p></div></article>
         </div>
@@ -340,12 +333,8 @@ const highlights = [PHOTOS.plaza, PHOTOS.vertical];
   <section class="section stay-section" aria-labelledby="alojamiento-title">
     <div class="stay-copy">
       <p class="section-kicker">Dónde alojarse</p>
-      <h2 id="alojamiento-title">Escalón para practicidad; San Benito para cultura y vida urbana</h2>
-      <p>
-        Si el monumento forma parte de una estancia corta en la capital, Escalón resulta práctico por
-        su cercanía y conexiones. San Benito ofrece una base cómoda para combinar museos, restaurantes
-        y otros puntos del oeste de San Salvador.
-      </p>
+      <h2 id="alojamiento-title">Compara alojamiento y desplazamientos</h2>
+      <p>Escalón y San Benito son áreas que puedes comparar al buscar alojamiento. No hemos verificado hoteles, disponibilidad, servicios ni tiempos de viaje; revisa cada dirección y su transporte antes de reservar.</p>
       <p class="muted">
         Antes de reservar, compara acceso vehicular, estacionamiento del alojamiento y tiempos reales
         de traslado en la franja horaria que planeas usar.
@@ -432,4 +421,5 @@ const highlights = [PHOTOS.plaza, PHOTOS.vertical];
       </p>
     </div>
   </section>
+<section class="section prose-section"><div class="prose"><h2>Fuentes y alcance</h2><p>Consulta verificada el 26 de octubre de 2026. La <a href="https://www.jurisprudencia.gob.sv/DocumentosBoveda/D/2/2010-2019/2018/09/CEEB8.PDF">ordenanza publicada en 2018</a> distingue la plaza del conjunto escultórico; no demuestra los horarios actuales. La historia y los materiales se contrastan con el <a href="https://www.elmetropolitanodigital.com/2019/11/plaza-salvador-del-mundo-patrimonio-cultural-de-el-salvador/">texto del Ministerio de Cultura republicado en 2019</a>. El <a href="https://www.laprensagrafica.com/elsalvador/Tan-importante-como-descuidado-Monumento-al-Divino-Salvador-del-mundo-20210805-0012.html">reportaje de 2021</a> documenta el terremoto y restauraciones; su descripción del estado de conservación no se presenta como actual.</p></div></section>
 </BaseLayout>

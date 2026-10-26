@@ -86,7 +86,7 @@ button, input { font: inherit; }
 .seal-axis::before { content: '✦'; position: absolute; font-size: 20px; top: -16px; left: -8px; }
 .seal-base { position: absolute; top: 118px; left: 60px; width: 42px; height: 90px; background: linear-gradient(#fff, #dbe2ea); clip-path: polygon(24% 0, 76% 0, 100% 100%, 0 100%); }
 
-.fact-band { width: min(1100px, calc(100% - 2rem)); margin: -2.6rem auto 0; position: relative; z-index: 5; display: grid; grid-template-columns: repeat(4, 1fr); background: white; border-radius: 16px; box-shadow: var(--shadow-soft); overflow: hidden; }
+.fact-band { width: min(1100px, calc(100% - 2rem)); margin: 0 auto; position: relative; z-index: 5; display: grid; grid-template-columns: repeat(4, 1fr); background: white; border-radius: 16px; box-shadow: var(--shadow-soft); overflow: hidden; }
 .fact-band div { padding: 1.25rem 1.4rem; border-right: 1px solid var(--line); }
 .fact-band div:last-child { border-right: 0; }
 .fact-band span { display: block; color: var(--muted); font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; font-weight: 800; }
@@ -314,7 +314,7 @@ dialog::backdrop { background: rgba(7,24,48,.68); backdrop-filter: blur(4px); }
 @media (max-width: 600px) {
   .site-header { width: calc(100% - 1rem); }.brand img { width: 176px; }
   .hero { min-height: 680px; height: 92svh; }.hero h1 { font-size: clamp(3.3rem, 18vw, 5.2rem); }.hero-content { width: calc(100% - 2rem); padding-bottom: 4.5rem; }.hero-lead { font-size: 1rem; }.hero-credit { left: 1rem; right: 1rem; bottom: .7rem; }
-  .fact-band { width: calc(100% - 1rem); margin-top: -1.8rem; }.fact-band div { padding: 1rem; }.fact-band strong { font-size: .9rem; }
+  .fact-band { width: calc(100% - 1rem); margin-top: 0; }.fact-band div { padding: 1rem; }.fact-band strong { font-size: .9rem; }
   .section { padding-top: 4.5rem; padding-bottom: 4.5rem; }.section-heading { margin-bottom: 2rem; }
   .section-heading h2, .anatomy-copy h2, .transport-intro h2, .stay-copy h2, .source-section h2 { font-size: 2.55rem; }
   .story-layout { gap: 2rem; }.timeline { margin-left: .5rem; }

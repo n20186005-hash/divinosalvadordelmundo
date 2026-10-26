@@ -4,9 +4,9 @@ import { ATTRACTION, GUIDES, PHOTOS } from '../data/site';
 import { PHOTO_FAQS } from '../data/faqs';
 import { buildBreadcrumbSchema, buildFaqSchema, buildWebPageSchema } from '../lib/schema';
 
-const pageTitle = 'Fotos del Monumento al Divino Salvador del Mundo: miradores';
+const pageTitle = 'Fotos del Salvador del Mundo: archivo histórico y encuadres';
 const pageDescription =
-  'Fotos del Monumento al Divino Salvador del Mundo en San Salvador: los cuatro miradores recomendados, mejores horas de luz, encuadres frontales y laterales y consejos de seguridad.';
+  'Fotos del Monumento al Divino Salvador del Mundo en San Salvador: cuatro imágenes históricas de 2010–2013, autores, licencias abiertas, ideas de encuadre y condiciones que conviene verificar.';
 
 const site = Astro.site;
 const path = '/fotos/';
@@ -23,7 +23,7 @@ const related = GUIDES.filter((guide) => guide.href !== path);
 const spots = [
   {
     name: 'Explanada frontal',
-    best: 'Todo el día',
+    best: 'Con acceso permitido',
     text: 'La composición simétrica clásica: el pedestal como eje vertical y la esfera centrada. Deja aire sobre la figura para que la escultura respire.',
   },
   {
@@ -39,7 +39,7 @@ const spots = [
   {
     name: 'Toma nocturna',
     best: 'Después del anochecer',
-    text: 'Con la iluminación encendida, el monumento cambia por completo. Usa una superficie firme o apoyo y evita bloquear pasos peatonales.',
+    text: 'Si hay iluminación y acceso permitido, puedes probar una toma nocturna. Usa una superficie firme o apoyo y evita bloquear pasos peatonales.',
   },
 ];
 
@@ -54,7 +54,7 @@ const gallery = [PHOTOS.frontal, PHOTOS.plaza, PHOTOS.vertical, PHOTOS.noche];
     <p class="section-kicker">Fotografía</p>
     <h1>Fotos del Monumento al Divino Salvador del Mundo</h1>
     <p class="page-lead">
-      Cuatro miradores y cuatro momentos de luz para fotografiar el monumento desde la
+      Cuatro fotografías históricas e ideas de encuadre del monumento y la
       {ATTRACTION.commonName}, con recomendaciones de seguridad en una plaza rodeada de tráfico.
     </p>
   </header>
@@ -101,7 +101,7 @@ const gallery = [PHOTOS.frontal, PHOTOS.plaza, PHOTOS.vertical, PHOTOS.noche];
             <div>
               <h4>{spot.name}</h4>
               <p>{spot.text}</p>
-              <p class="spot-best">Mejor momento: {spot.best}</p>
+              <p class="spot-best">Condición sugerida: {spot.best}</p>
             </div>
           </article>
         ))
@@ -128,7 +128,7 @@ const gallery = [PHOTOS.frontal, PHOTOS.plaza, PHOTOS.vertical, PHOTOS.noche];
       <article class="info-card">
         <p class="card-label">Seguridad</p>
         <h3>Fuera de la calzada</h3>
-        <p>No fotografíes desde la calzada ni te detengas en isletas de tráfico. El tráfico alrededor de la plaza es intenso a casi cualquier hora.</p>
+        <p>No fotografíes desde la calzada ni te detengas en isletas de tráfico. Comprueba los cruces y las condiciones de circulación antes de acercarte.</p>
       </article>
       <article class="info-card">
         <p class="card-label">Respeto</p>
