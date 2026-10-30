@@ -11,7 +11,7 @@ export const HOME_FAQS: Faq[] = [
   },
   {
     q: '¿Cuál es el horario de visita?',
-    a: 'Google Maps mostraba 24 horas los siete días el 26 de octubre de 2026. Es una instantánea de terceros, no garantía de acceso, seguridad o servicios continuos; comprueba avisos y controles vigentes.',
+    a: 'Google Maps mostraba 24 horas los siete días el 29 de octubre de 2026. Es una instantánea de terceros, no garantía de acceso, seguridad o servicios continuos; comprueba avisos y controles vigentes.',
   },
   {
     q: '¿Cómo llegar al Monumento al Divino Salvador del Mundo?',
