@@ -1,6 +1,3 @@
-# Canonicalización del dominio: HTTPS + sin www.
-# Nota: las reglas de host también deben existir en el panel de Cloudflare
-# (Always Use HTTPS + Redirect Rules) para cubrir el tráfico que no pase por assets.
-http://divinosalvadordelmundo.com/*  https://divinosalvadordelmundo.com/:splat  301
-http://www.divinosalvadordelmundo.com/*  https://divinosalvadordelmundo.com/:splat  301
-https://www.divinosalvadordelmundo.com/*  https://divinosalvadordelmundo.com/:splat  301
+# Host and protocol canonicalization is handled in src/worker.js.
+# Workers Static Assets _redirects supports path rules, not domain-level sources.
+# Keep assets.run_worker_first enabled so redirects preserve the path and query.
